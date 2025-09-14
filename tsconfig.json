@@ -17,6 +17,6 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "composite": true,
-    "types": []
+    "types": ["vitest", "@testing-library/jest-dom"]
   }
 }
