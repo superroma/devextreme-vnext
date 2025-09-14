@@ -15,7 +15,16 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "composite": true,
-    "types": ["vitest", "@testing-library/jest-dom"]
+    "types": ["vitest", "@testing-library/jest-dom"],
+    "baseUrl": ".",
+    "paths": {
+      "@devextreme-vnext/core": ["packages/core/src/index.ts"],
+      "@devextreme-vnext/core/*": ["packages/core/src/*"],
+      "@devextreme-vnext/components": ["packages/components/src/index.tsx"],
+      "@devextreme-vnext/components/*": ["packages/components/src/*"],
+      "@devextreme-vnext/integrations": ["packages/integrations/src/index.ts"],
+      "@devextreme-vnext/integrations/*": ["packages/integrations/src/*"]
+    }
   },
   "references": [
     { "path": "packages/core" },

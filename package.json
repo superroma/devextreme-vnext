@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm --filter @devextreme-vnext/playground dev",
-    "build": "pnpm -r --filter '@devextreme-vnext/*' run build",
+    "build": "pnpm -r run build",
     "clean": "rimraf **/dist",
     "typecheck": "tsc -b",
     "test": "vitest run",

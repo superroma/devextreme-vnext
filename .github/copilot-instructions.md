@@ -30,7 +30,9 @@ Modernizing DevExtreme Reactive from plugin-based to modern React hooks.
 
 1. **RED**: Convert legacy tests OR write new failing tests
 2. **GREEN**: Implement minimal code to pass tests
-3. **REFACTOR**: Optimize and clean up. FIX TS ERRORS!
+3. **REFACTOR**: Optimize and clean up. FIX TS ERRORS - `pnpm typecheck`
+
+Use `pnpm test` terminal command to run tests.
 
 ### Legacy Test Conversion (Priority)
 
