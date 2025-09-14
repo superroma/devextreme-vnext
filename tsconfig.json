@@ -23,13 +23,19 @@
       "@devextreme-vnext/components": ["packages/components/src/index.tsx"],
       "@devextreme-vnext/components/*": ["packages/components/src/*"],
       "@devextreme-vnext/integrations": ["packages/integrations/src/index.ts"],
-      "@devextreme-vnext/integrations/*": ["packages/integrations/src/*"]
+      "@devextreme-vnext/integrations/*": ["packages/integrations/src/*"],
+      "@devextreme-vnext/dx-react-grid": ["packages/dx-react-grid/src/index.ts"],
+      "@devextreme-vnext/dx-react-grid/*": ["packages/dx-react-grid/src/*"],
+      "@devextreme-vnext/dx-react-grid-demos": ["packages/dx-react-grid-demos/src/App.tsx"],
+      "@devextreme-vnext/dx-react-grid-demos/*": ["packages/dx-react-grid-demos/src/*"]
     }
   },
   "references": [
     { "path": "packages/core" },
     { "path": "packages/components" },
-    { "path": "packages/integrations" }
+    { "path": "packages/integrations" },
+    { "path": "packages/dx-react-grid" },
+    { "path": "packages/dx-react-grid-demos" }
   ],
   "include": []
 }

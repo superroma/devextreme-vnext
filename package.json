@@ -7,10 +7,13 @@
   "scripts": {
     "dev": "pnpm --filter @devextreme-vnext/playground dev",
     "build": "pnpm -r run build",
+    "pretest": "pnpm build",
     "clean": "rimraf **/dist",
     "typecheck": "tsc -b",
     "test": "vitest run",
     "test:watch": "vitest --watch",
+    "demo:grid": "pnpm --filter @devextreme-vnext/dx-react-grid-demos dev",
+    "build:grid": "pnpm --filter @devextreme-vnext/dx-react-grid build",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
   },
@@ -18,6 +21,7 @@
     "@testing-library/jest-dom": "^6.4.0",
     "@testing-library/react": "^14.2.0",
     "@testing-library/user-event": "^14.5.0",
+    "@types/node": "^24.4.0",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "eslint": "^8.57.0",

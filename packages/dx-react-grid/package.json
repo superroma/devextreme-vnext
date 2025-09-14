@@ -1,16 +1,15 @@
 {
-  "name": "@devextreme-vnext/core",
-  "version": "0.1.0",
-  "private": false,
+  "name": "@devextreme-vnext/dx-react-grid",
+  "version": "0.0.1",
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "sideEffects": false,
   "files": [
     "dist",
     "src"
   ],
-  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -25,11 +24,11 @@
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
+  "dependencies": {
+    "@devextreme-vnext/core": "workspace:*"
+  },
   "devDependencies": {
     "tsup": "^8.0.1",
     "typescript": "^5.4.0"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
