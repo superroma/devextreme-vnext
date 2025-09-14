@@ -19,37 +19,47 @@ In this mode you can run build, run tests, do any investigation, but not change 
 
 ## Project Context
 
-Modernizing DevExtreme Reactive into a new repository with modern React tooling.
+Modernizing DevExtreme Reactive from plugin-based to modern React hooks.
 
-original repo is in ./devextreme-reactive/ folder
+- Legacy reference: `../devextreme-reactive/`
+- Active development: `./`
 
-## Current Task Scope
+## Development Methodology: TDD (MANDATORY)
 
-Setting up modern monorepo structure with:
+1. **RED**: Convert legacy tests OR write new failing tests
+2. **GREEN**: Implement minimal code to pass tests
+3. **REFACTOR**: Optimize and clean up. FIX TS ERRORS!
 
-- pnpm workspaces (not Lerna)
-- TypeScript 5.x
-- Vite (not Webpack)
-- Vitest (not Jest)
-- Modern React 18+
+### Legacy Test Conversion (Priority)
 
-## Repository Structure Target
+For existing features: Convert ALL legacy tests from `../devextreme-reactive/packages/dx-grid-core/src/plugins/*/computeds.test.ts` before implementing.
 
-## Repository Structure
+## Architecture
 
-devextreme-vnext/
-├── packages/
-│ ├── core/ # Headless hooks and logic
-│ ├── components/ # Styled React components
-│ └── integrations/ # Framework integrations (MUI, etc.)
-├── apps/
-│ ├── storybook/ # Component documentation
-│ └── playground/ # Development testing
-└── tools/ # Shared build configs
+- **React hooks** not plugins
+- **TypeScript strict** throughout
+- **Zustand** for state management
+- **Headless core** + styled components
+- **Tree-shakeable** exports
 
-## Technology Requirements
+## Key Patterns
 
-- Node.js 18+, pnpm 8+, TypeScript 5.2+
-- ESM + CJS dual exports
-- Strict TypeScript configuration
-- Modern build tooling only
+- Plugin → Hook: `<IntegratedSorting />` → `useSorting(data, options)`
+- Test conversion: `sortedRows(...)` → `renderHook(() => useSorting(...))`
+- Preserve legacy behavior exactly
+
+## Quality Requirements
+
+- 100% TypeScript coverage
+- > 90% test coverage
+- Performance optimized (useMemo, useCallback)
+- No data mutation
+- Preserve null/undefined ordering from legacy
+
+## Reference Legacy Code
+
+Use `../devextreme-reactive/` for:
+
+- Exact behavior requirements
+- Comprehensive test cases to convert
+- Edge case handling patterns

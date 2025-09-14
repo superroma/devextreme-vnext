@@ -11,3 +11,5 @@ export * from "./types/sorting.js";
 export { default as mergeSort } from "./utils/merge-sort.js";
 export * from "./utils/sorting.js";
 export * from "./utils/column-extension.js";
+// Hooks
+export { useSorting } from "./grid/useSorting.js";

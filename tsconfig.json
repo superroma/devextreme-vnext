@@ -1,6 +1,4 @@
 {
-  "files": [],
-  "references": [],
   "compilerOptions": {
     "target": "ES2021",
     "module": "NodeNext",
@@ -18,5 +16,11 @@
     "jsx": "react-jsx",
     "composite": true,
     "types": ["vitest", "@testing-library/jest-dom"]
-  }
+  },
+  "references": [
+    { "path": "packages/core" },
+    { "path": "packages/components" },
+    { "path": "packages/integrations" }
+  ],
+  "include": []
 }
