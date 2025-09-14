@@ -286,7 +286,6 @@ Ensure new packages are included:
 ```yaml
 packages:
   - 'packages/*'
-  - 'apps/*'
 ```
 
 ### Update root `package.json`:

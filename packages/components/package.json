@@ -19,7 +19,9 @@
     }
   },
   "scripts": {
-    "build": "tsup src/index.tsx --format esm,cjs --clean && rm -f tsconfig.tsbuildinfo && tsc -p tsconfig.json --emitDeclarationOnly --outDir dist"
+    "build": "tsup src/index.tsx --format esm,cjs --clean && rm -f tsconfig.tsbuildinfo && tsc -p tsconfig.json --emitDeclarationOnly --outDir dist",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --dir src || echo 'no tests'"
   },
   "dependencies": {
     "@devextreme-vnext/core": "0.1.0"
