@@ -1,8 +1,8 @@
-# Step 07: Add Turbo Build Orchestration + Playwright E2E Tests
+# Step 07: Add Turbo Build Orchestration + Manual Playwright E2E Tests
 
 ## Task
 
-Add proper build orchestration with Turbo (following original plan) and e2e tests to ensure demos actually work.
+Add proper build orchestration with Turbo (following original plan) and e2e tests to manually verify demos work.
 
 ## Part 1: Add Turbo Build Orchestration
 
@@ -20,7 +20,7 @@ Add proper build orchestration with Turbo (following original plan) and e2e test
 - Add `typecheck` script to all package.json files
 - Reference: Original plan.md lines 370-382
 
-## Part 2: Add Playwright E2E Tests
+## Part 2: Add Playwright E2E Tests (Manual Only)
 
 ### Legacy Reference
 
@@ -36,25 +36,30 @@ Legacy uses TestCafe: `../devextreme-reactive/packages/dx-react-grid-demos/src/t
   - `grid-filtering.spec.ts` - filter inputs work
 - Add e2e scripts: `e2e`, `e2e:ui`, `e2e:install`
 
-## Part 3: CI Integration
-
-- Create `.github/workflows/ci.yml`
-- Run: build, test, typecheck, lint, e2e
-- Upload playwright reports on failure
-
 ## Success Criteria
 
 1. **Turbo eliminates build issues** when adding packages
 2. **E2E tests verify demo works** - data loads, sorting/filtering functional
-3. **CI runs all tests** automatically
+3. **Manual testing workflow** established
 4. **No more TypeScript compilation problems**
 
-## Testing Commands
+## Manual Testing Commands
 
 ```bash
+# Setup
 pnpm install && pnpm e2e:install
+
+# Build everything with Turbo
 turbo run build
-turbo run e2e
+
+# Start demo manually
+turbo run dev --filter=@devextreme-vnext/dx-react-grid-demos
+
+# In another terminal - run e2e tests
+pnpm e2e
+
+# Or run with UI for debugging
+pnpm e2e:ui
 ```
 
-This follows original plan and ensures demos actually work! 🎯
+This follows original plan and enables manual verification! 🎯
