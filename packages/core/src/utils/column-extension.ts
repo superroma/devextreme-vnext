@@ -1,4 +1,4 @@
-import { SortingColumnExtension } from "../types/sorting";
+import { SortingColumnExtension } from "../types/sorting.js";
 
 // Returns a map from columnName to extension object for quick lookup.
 export function mapColumnExtensions(
