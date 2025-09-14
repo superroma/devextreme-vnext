@@ -34,32 +34,32 @@ Based on legacy `dx-grid-core/src/types/`:
 1. `packages/core/src/types/grid.ts`:
 
 ```typescript
-export type Row = any;
-export type RowId = number | string;
+export type Row = any
+export type RowId = number | string
 
 export interface Column {
-  name: string;
-  title?: string;
-  getCellValue?: GetCellValueFn;
+  name: string
+  title?: string
+  getCellValue?: GetCellValueFn
 }
 
-export type GetCellValueFn = (row: Row, columnName: string) => any;
+export type GetCellValueFn = (row: Row, columnName: string) => any
 ```
 
 2. `packages/core/src/types/sorting.ts`:
 
 ```typescript
-export type SortingDirection = "asc" | "desc";
+export type SortingDirection = 'asc' | 'desc'
 
 export interface Sorting {
-  columnName: string;
-  direction: SortingDirection;
+  columnName: string
+  direction: SortingDirection
 }
 
 export interface SortingColumnExtension {
-  columnName: string;
-  compare?: (a: any, b: any) => number;
-  sortingEnabled?: boolean;
+  columnName: string
+  compare?: (a: any, b: any) => number
+  sortingEnabled?: boolean
 }
 ```
 
@@ -75,41 +75,41 @@ export interface SortingColumnExtension {
 
 ```typescript
 // packages/core/src/utils/__tests__/merge-sort.test.ts
-describe("mergeSort", () => {
-  it("should sort numbers ascending", () => {});
-  it("should be stable sort", () => {});
-  it("should handle empty array", () => {});
-});
+describe('mergeSort', () => {
+  it('should sort numbers ascending', () => {})
+  it('should be stable sort', () => {})
+  it('should handle empty array', () => {})
+})
 
 // packages/core/src/utils/__tests__/sorting.test.ts
-describe("defaultCompare", () => {
-  it("should handle null/undefined values correctly", () => {});
-  it("should compare numbers correctly", () => {});
-  it("should compare strings correctly", () => {});
-});
+describe('defaultCompare', () => {
+  it('should handle null/undefined values correctly', () => {})
+  it('should compare numbers correctly', () => {})
+  it('should compare strings correctly', () => {})
+})
 
-describe("createCompare", () => {
-  it("should create multi-column comparer", () => {});
-  it("should handle custom column comparers", () => {});
-  it("should respect sort direction", () => {});
-});
+describe('createCompare', () => {
+  it('should create multi-column comparer', () => {})
+  it('should handle custom column comparers', () => {})
+  it('should respect sort direction', () => {})
+})
 
-describe("sortedRows", () => {
-  it("should sort rows by single column", () => {});
-  it("should sort rows by multiple columns", () => {});
-  it("should use custom getCellValue function", () => {});
-});
+describe('sortedRows', () => {
+  it('should sort rows by single column', () => {})
+  it('should sort rows by multiple columns', () => {})
+  it('should use custom getCellValue function', () => {})
+})
 ```
 
 #### 2. Hook Tests (Will Fail Initially)
 
 ```typescript
 // packages/core/src/grid/__tests__/useSorting.test.ts
-describe("useSorting", () => {
-  it("should sort data ascending by column", () => {
+describe('useSorting', () => {
+  it('should sort data ascending by column', () => {
     // This will fail until we implement the hook
-  });
-});
+  })
+})
 ```
 
 ## Part 3: Implementation Order

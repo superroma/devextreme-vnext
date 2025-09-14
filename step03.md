@@ -48,45 +48,43 @@ Replace the placeholder test with comprehensive test suite converted from legacy
 
 ```typescript
 // LEGACY TEST (computeds.test.ts)
-it("can sort ascending by one column", () => {
-  const sorting: ReadonlyArray<Sorting> = [
-    { columnName: "a", direction: "asc" },
-  ];
-  const sorted = sortedRows(rows, sorting, getCellValue);
-  expect(sorted).toEqual([...expected]);
-});
+it('can sort ascending by one column', () => {
+  const sorting: ReadonlyArray<Sorting> = [{ columnName: 'a', direction: 'asc' }]
+  const sorted = sortedRows(rows, sorting, getCellValue)
+  expect(sorted).toEqual([...expected])
+})
 
 // CONVERTED HOOK TEST (useSorting.test.ts)
-it("can sort ascending by one column", () => {
+it('can sort ascending by one column', () => {
   const { result } = renderHook(() =>
     useSorting(rows, {
-      sorting: [{ columnName: "a", direction: "asc" }],
+      sorting: [{ columnName: 'a', direction: 'asc' }],
     })
-  );
-  expect(result.current.sortedData).toEqual([...expected]);
-});
+  )
+  expect(result.current.sortedData).toEqual([...expected])
+})
 ```
 
 #### Hook API Tests (New - Not in Legacy)
 
 ```typescript
-describe("useSorting - Hook API", () => {
-  it("should support controlled mode with sorting prop", () => {
+describe('useSorting - Hook API', () => {
+  it('should support controlled mode with sorting prop', () => {
     // Test external sorting control
-  });
+  })
 
-  it("should support uncontrolled mode with defaultSorting", () => {
+  it('should support uncontrolled mode with defaultSorting', () => {
     // Test internal state management
-  });
+  })
 
-  it("should call onSortingChange callback", () => {
+  it('should call onSortingChange callback', () => {
     // Test callback invocation
-  });
+  })
 
-  it("should handle columnExtensions for custom comparers", () => {
+  it('should handle columnExtensions for custom comparers', () => {
     // Test custom compare integration
-  });
-});
+  })
+})
 ```
 
 ### Test Data (Copy from Legacy)
@@ -99,9 +97,9 @@ const rows = [
   { a: 1, b: 1 },
   { a: 2, b: 1 },
   { a: 1, b: 2 },
-];
+]
 
-const getCellValue = (row, columnName) => row[columnName];
+const getCellValue = (row, columnName) => row[columnName]
 ```
 
 ## Part 2: Implement useSorting Hook
@@ -114,20 +112,20 @@ Hook signature:
 
 ```typescript
 interface UseSortingOptions<T> {
-  sorting?: Sorting[]; // Controlled mode
-  onSortingChange?: (sorting: Sorting[]) => void; // Controlled callback
-  defaultSorting?: Sorting[]; // Uncontrolled initial value
-  columnExtensions?: SortingColumnExtension[]; // Custom comparers
+  sorting?: Sorting[] // Controlled mode
+  onSortingChange?: (sorting: Sorting[]) => void // Controlled callback
+  defaultSorting?: Sorting[] // Uncontrolled initial value
+  columnExtensions?: SortingColumnExtension[] // Custom comparers
 }
 
 function useSorting<T>(
   data: T[],
   options?: UseSortingOptions<T>
 ): {
-  sortedData: T[];
-  sorting: Sorting[];
-  setSorting: (sorting: Sorting[]) => void;
-};
+  sortedData: T[]
+  sorting: Sorting[]
+  setSorting: (sorting: Sorting[]) => void
+}
 ```
 
 #### Implementation Requirements:
@@ -148,7 +146,7 @@ Only create Zustand store if uncontrolled mode needs persistent state across re-
 
 ```typescript
 // Add hook export
-export { useSorting } from "./grid/useSorting.js";
+export { useSorting } from './grid/useSorting.js'
 ```
 
 ## Success Criteria

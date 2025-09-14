@@ -15,6 +15,8 @@ In this mode you can run build, run tests, do any investigation, but not change 
 - If the user asks you to take an action while in plan mode you will remind them that you are in plan mode and that they need to approve the plan first.
 - When in plan mode always output the full updated plan in every response.
 
+When generating code obey prettier settings if present.
+
 # Copilot Instructions for DevExtreme vNext
 
 ## Project Context
