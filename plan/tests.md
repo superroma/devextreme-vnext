@@ -118,7 +118,7 @@ describe('useGrouping - converted legacy behavior', () => {
 | B1    | Grouping/Selection/Summary (integrated + state reducers) | 7+    | R         |
 | B2    | Sorting/Paging/Filtering/Editing/Search/RowDetail state  | 6     | R         |
 | B3    | Custom grouping/tree/exporter/virtual                    | 7     | R         |
-| B4    | Table plugins (computeds + helpers + column features)    | ~40   | R (22/40) |
+| B4    | Table plugins (computeds + helpers + column features)    | ~40   | R (30/40) |
 | B5    | Utilities + blueprint + leftovers                        | ~15   | [ ]       |
 
 ## Detailed Mapping Table
@@ -182,16 +182,16 @@ describe('useGrouping - converted legacy behavior', () => {
 | plugins/table-column-visibility/helpers.test.ts     | table/**tests**/useTableColumnVisibility.helpers.test.ts   | B4    | R           |
 | plugins/table-inline-cell-editing/computeds.test.ts | table/**tests**/useTableInlineCellEditing.test.ts          | B4    | R           |
 | plugins/table-edit-row/computeds.test.ts            | table/**tests**/useTableEditRow.test.ts                    | B4    | R           |
-| plugins/table-edit-row/helpers.test.ts              | table/**tests**/useTableEditRow.helpers.test.ts            | B4    | [S]         |
-| plugins/table-edit-column/computeds.test.ts         | table/**tests**/useTableEditColumn.test.ts                 | B4    | [S]         |
-| plugins/table-edit-column/helpers.test.ts           | table/**tests**/useTableEditColumn.helpers.test.ts         | B4    | [S]         |
-| plugins/table-band-header/computeds.test.ts         | table/**tests**/useTableBandHeader.test.ts                 | B4    | [S]         |
-| plugins/table-band-header/helpers.test.ts           | table/**tests**/useTableBandHeader.helpers.test.ts         | B4    | [S]         |
+| plugins/table-edit-row/helpers.test.ts              | table/**tests**/useTableEditRow.helpers.test.ts            | B4    | R           |
+| plugins/table-edit-column/computeds.test.ts         | table/**tests**/useTableEditColumn.test.ts                 | B4    | R           |
+| plugins/table-edit-column/helpers.test.ts           | table/**tests**/useTableEditColumn.helpers.test.ts         | B4    | R           |
+| plugins/table-band-header/computeds.test.ts         | table/**tests**/useTableBandHeader.test.ts                 | B4    | R (partial) |
+| plugins/table-band-header/helpers.test.ts           | table/**tests**/useTableBandHeader.helpers.test.ts         | B4    | R (partial) |
 | plugins/table-keyboard-navigation/computeds.test.ts | table/**tests**/useTableKeyboardNavigation.test.ts         | B4    | [S]         |
 | plugins/table-keyboard-navigation/helpers.test.ts   | table/**tests**/useTableKeyboardNavigation.helpers.test.ts | B4    | [S]         |
-| plugins/table-row-detail/computeds.test.ts          | table/**tests**/useTableRowDetail.test.ts                  | B4    | [S]         |
-| plugins/table-row-detail/helpers.test.ts            | table/**tests**/useTableRowDetail.helpers.test.ts          | B4    | [S]         |
-| plugins/table-tree-column/helpers.test.ts           | table/**tests**/useTableTreeColumn.helpers.test.ts         | B4    | [S]         |
+| plugins/table-row-detail/computeds.test.ts          | table/**tests**/useTableRowDetail.test.ts                  | B4    | R           |
+| plugins/table-row-detail/helpers.test.ts            | table/**tests**/useTableRowDetail.helpers.test.ts          | B4    | R           |
+| plugins/table-tree-column/helpers.test.ts           | table/**tests**/useTableTreeColumn.helpers.test.ts         | B4    | R           |
 
 (Additional table plugin mappings can be appended if any missed.)
 
@@ -219,9 +219,9 @@ describe('useGrouping - converted legacy behavior', () => {
 
 ## Progress Counters
 
-- Existing converted (initial + B1 + B2 + B3 + 3 utils + 22 table): 25 (prev) + 22 (B4 subset) = 47 files.
-- Remaining planned (excluding discrepancy + blueprint decision): 80 - 47 = 33.
-- Completion % (updated): 47 / 80 = 58.75%.
+- Existing converted (initial + B1 + B2 + B3 + 3 utils + 30 table): 25 (prev) + 30 (B4 subset) = 55 files.
+- Remaining planned (excluding discrepancy + blueprint decision): 80 - 55 = 25.
+- Completion % (updated): 55 / 80 = 68.75%.
 
 ## Batch B1 Implementation Instructions
 
