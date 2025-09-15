@@ -235,5 +235,32 @@ describe('useTableBandHeader - converted legacy behavior', () => {
         )
       ).toEqual([true, true])
     })
+    describe('hidden columns', () => {
+      // Using direct literal mirrors of legacy expectations; headerColumnsChains structure implicit
+      const headerColumnChains = 'legacy-placeholder' as any
+      const bandLevels = { Band0: 0, Band01: 0, Band1: 1 }
+      it('should work with partially hidden bands', () => {
+        const columnVisibleIntervals = [[2, 6]]
+        expect(
+          bandLevelsVisibility(columnVisibleIntervals as any, headerColumnChains, bandLevels as any)
+        ).toEqual([true, false])
+      })
+      it('should work with hidden bands', () => {
+        const columnVisibleIntervals = [[4, 6]]
+        expect(
+          bandLevelsVisibility(columnVisibleIntervals as any, headerColumnChains, bandLevels as any)
+        ).toEqual([false, false])
+      })
+      it('should work with gapped column boundaries', () => {
+        const columnVisibleIntervals = [
+          [0, 0],
+          [2, 2],
+          [5, 6],
+        ]
+        expect(
+          bandLevelsVisibility(columnVisibleIntervals as any, headerColumnChains, bandLevels as any)
+        ).toEqual([true, false])
+      })
+    })
   })
 })

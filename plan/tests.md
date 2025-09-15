@@ -118,7 +118,7 @@ describe('useGrouping - converted legacy behavior', () => {
 | B1    | Grouping/Selection/Summary (integrated + state reducers) | 7+    | R         |
 | B2    | Sorting/Paging/Filtering/Editing/Search/RowDetail state  | 6     | R         |
 | B3    | Custom grouping/tree/exporter/virtual                    | 7     | R         |
-| B4    | Table plugins (computeds + helpers + column features)    | ~40   | R (30/40) |
+| B4    | Table plugins (computeds + helpers + column features)    | ~40   | R (31/40) |
 | B5    | Utilities + blueprint + leftovers                        | ~15   | [ ]       |
 
 ## Detailed Mapping Table
@@ -165,7 +165,7 @@ describe('useGrouping - converted legacy behavior', () => {
 | plugins/table-header-row/helpers.test.ts            | table/**tests**/useTableHeaderRow.helpers.test.ts          | B4    | R           |
 | plugins/table-filter-row/computeds.test.ts          | table/**tests**/useTableFilterRow.test.ts                  | B4    | R           |
 | plugins/table-filter-row/helpers.test.ts            | table/**tests**/useTableFilterRow.helpers.test.ts          | B4    | R           |
-| plugins/table-group-row/computeds.test.ts           | table/**tests**/useTableGroupRow.test.ts                   | B4    | R (partial) |
+| plugins/table-group-row/computeds.test.ts           | table/**tests**/useTableGroupRow.test.ts                   | B4    | R           |
 | plugins/table-group-row/helpers.test.ts             | table/**tests**/useTableGroupRow.helpers.test.ts           | B4    | R           |
 | plugins/table-selection/computeds.test.ts           | table/**tests**/useTableSelection.test.ts                  | B4    | R           |
 | plugins/table-selection/helpers.test.ts             | table/**tests**/useTableSelection.helpers.test.ts          | B4    | R           |
@@ -185,9 +185,9 @@ describe('useGrouping - converted legacy behavior', () => {
 | plugins/table-edit-row/helpers.test.ts              | table/**tests**/useTableEditRow.helpers.test.ts            | B4    | R           |
 | plugins/table-edit-column/computeds.test.ts         | table/**tests**/useTableEditColumn.test.ts                 | B4    | R           |
 | plugins/table-edit-column/helpers.test.ts           | table/**tests**/useTableEditColumn.helpers.test.ts         | B4    | R           |
-| plugins/table-band-header/computeds.test.ts         | table/**tests**/useTableBandHeader.test.ts                 | B4    | R (partial) |
+| plugins/table-band-header/computeds.test.ts         | table/**tests**/useTableBandHeader.test.ts                 | B4    | R           |
 | plugins/table-band-header/helpers.test.ts           | table/**tests**/useTableBandHeader.helpers.test.ts         | B4    | R (partial) |
-| plugins/table-keyboard-navigation/computeds.test.ts | table/**tests**/useTableKeyboardNavigation.test.ts         | B4    | [S]         |
+| plugins/table-keyboard-navigation/computeds.test.ts | table/**tests**/useTableKeyboardNavigation.test.ts         | B4    | R           |
 | plugins/table-keyboard-navigation/helpers.test.ts   | table/**tests**/useTableKeyboardNavigation.helpers.test.ts | B4    | [S]         |
 | plugins/table-row-detail/computeds.test.ts          | table/**tests**/useTableRowDetail.test.ts                  | B4    | R           |
 | plugins/table-row-detail/helpers.test.ts            | table/**tests**/useTableRowDetail.helpers.test.ts          | B4    | R           |
@@ -219,9 +219,11 @@ describe('useGrouping - converted legacy behavior', () => {
 
 ## Progress Counters
 
-- Existing converted (initial + B1 + B2 + B3 + 3 utils + 30 table): 25 (prev) + 30 (B4 subset) = 55 files.
-- Remaining planned (excluding discrepancy + blueprint decision): 80 - 55 = 25.
-- Completion % (updated): 55 / 80 = 68.75%.
+- Existing converted (initial + B1 + B2 + B3 + 3 utils + 31 table): 25 (prev) + 31 (B4 subset) = 56 files.
+- Remaining planned (excluding discrepancy + blueprint decision): 80 - 56 = 24.
+- Completion % (updated): 56 / 80 = 70%.
+
+Progress delta note: advanced to 31 table files running by finalizing group-row computeds, band-header computeds, and adding keyboard navigation computeds test; band-header helpers still partial; keyboard navigation helpers pending.
 
 ## Batch B1 Implementation Instructions
 
