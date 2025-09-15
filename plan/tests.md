@@ -35,21 +35,73 @@ B3 Tree / virtual / exporter / custom: custom-grouping, custom-tree-data, tree-d
 B4 Table layer: ALL `table-*` computeds + helpers + column features + selection + summary rows.
 B5 Utilities + blueprint + any stragglers (column-extension, table utils, virtual table utils, group panel, column geometries, common reducers, etc.).
 
-## Conversion Template (Hook-based)
+## Conversion Template (Hook-based) - NO FAKE IMPLEMENTATIONS!
+
+**❌ WRONG APPROACH (what Copilot did):**
 
 ```ts
-// Converted from: packages/dx-grid-core/src/plugins/integrated-grouping/computeds.test.ts
-// Phase: RED (Step 08) – semantic expectations preserved; implementation may be incomplete.
-import { describe, it, expect } from 'vitest'
-// import { useGrouping } from '../../index.js' // (hook to implement in Step 09+)
+// DON'T DO THIS - creates fake implementation in test file!
+const fakeGroupedRows = (rows, grouping) => {
+  /* 60 lines of fake code */
+}
 
 describe('useGrouping - converted legacy behavior', () => {
-  // Example legacy test name preserved:
-  it.todo('can group by first column')
+  it('can group by first column', () => {
+    const result = fakeGroupedRows(rows, grouping) // Uses fake!
+    expect(result.map((r) => r.groupedBy)).toContain('a') // Weak assertion
+  })
 })
 ```
 
-Reducer tests may target pure utility or future hook wrapper. For now we keep names and body placeholders referencing future API.
+**✅ CORRECT APPROACH:**
+
+```ts
+// Converted from: packages/dx-grid-core/src/plugins/integrated-grouping/computeds.test.ts
+// Phase: RED (Step 08) – REAL imports, EXACT expectations, tests FAIL until Step 09+
+import { describe, it, expect } from 'vitest'
+import { renderHook } from '@testing-library/react'
+import { useGrouping } from '../useGrouping.js' // REAL hook import (doesn't exist yet)
+
+// Copy EXACT test data from legacy file
+const rows = [
+  { a: 1, b: 1 },
+  { a: 1, b: 2 },
+  { a: 2, b: 1 },
+  { a: 2, b: 2 },
+]
+const getCellValue = (row, columnName) => row[columnName]
+const firstGrouping = [{ columnName: 'a' }]
+const firstGroupedRows = [
+  // Copy EXACT expected result from legacy test
+  { groupedBy: 'a', key: '1', value: 1 /* ... */ },
+  { a: 1, b: 1 },
+  { a: 1, b: 2 },
+  { groupedBy: 'a', key: '2', value: 2 /* ... */ },
+  { a: 2, b: 1 },
+  { a: 2, b: 2 },
+]
+
+describe('useGrouping - converted legacy behavior', () => {
+  describe('groupedRows functionality', () => {
+    it('can group by first column', () => {
+      const { result } = renderHook(() =>
+        useGrouping(rows, { grouping: firstGrouping, getCellValue })
+      )
+
+      // EXACT same expectation as legacy
+      expect(result.current.groupedData).toEqual(firstGroupedRows)
+    })
+  })
+})
+```
+
+**CRITICAL RULES:**
+
+1. Import REAL hooks that don't exist yet
+2. Copy EXACT test data and expectations from legacy
+3. Tests MUST FAIL because hooks don't exist
+4. NEVER create fake implementations in test files
+5. Use exact `.toEqual()` assertions, not weak `.toContain()`
 
 ## Open Decisions
 
@@ -171,12 +223,31 @@ Reducer tests may target pure utility or future hook wrapper. For now we keep na
 - Remaining planned (excluding discrepancy + blueprint decision): ~74.
 - Completion % (initial): 6 / 80 = 7.5%.
 
-## Next Immediate Actions (B1)
+## Batch B1 Implementation Instructions
 
-1. Decide stub strategy & blueprint inclusion.
-2. Create grouping/selection/summary test skeletons.
-3. Add state reducer test skeletons.
-4. Update status codes to [S].
+**Target Files for B1:**
+
+1. `grid/__tests__/useGrouping.test.ts` (from integrated-grouping/computeds.test.ts)
+2. `grid/__tests__/useSelection.test.ts` (from integrated-selection/computeds.test.ts)
+3. `grid/__tests__/useSummary.test.ts` (from integrated-summary/computeds.test.ts)
+4. `grid/__tests__/useGrouping.state.test.ts` (from grouping-state/reducers.test.ts)
+5. `grid/__tests__/useSelection.state.test.ts` (from selection-state/reducers.test.ts)
+6. `grid/__tests__/useSummary.state.helpers.test.ts` (from summary-state/helpers.test.ts)
+
+**For each file:**
+
+1. **Copy ALL test data exactly** from legacy file
+2. **Import real hooks** that don't exist yet: `import { useGrouping } from '../useGrouping.js'`
+3. **Convert describe/it structure** but keep same test names
+4. **Use renderHook()** for all tests: `renderHook(() => useGrouping(data, options))`
+5. **Keep exact expectations**: Same `.toEqual()` assertions as legacy
+6. **Let tests FAIL** - that's the point! They fail because hooks don't exist
+
+**Expected Result:**
+
+- All B1 tests run but FAIL with "Cannot resolve module '../useGrouping.js'"
+- Status changes from [S] to [R] (Running but failing)
+- Clear list of exactly what hooks need to be implemented in Step 09
 
 ## Notes
 

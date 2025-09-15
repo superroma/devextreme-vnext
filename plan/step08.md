@@ -63,36 +63,71 @@ VNext:  packages/core/src/grid/__tests__/useFiltering.test.ts ✅ (already done)
 - `utils/sorting.test.ts` ✅ (done)
 - Plus 5 more utility test files
 
-### Conversion Template
+### Conversion Template - CRITICAL: NO FAKE IMPLEMENTATIONS
 
-For each legacy test file, follow this pattern:
-
+**❌ WRONG - Don't do this:**
 ```typescript
-// Legacy: computeds.test.ts
-import { someComputed } from './computeds'
+// DON'T create fake implementations in test files!
+const fakeGroupedRows = (rows, grouping) => { /* fake logic */ }
 
-describe('SomePlugin computeds', () => {
-  describe('#someComputed', () => {
-    it('should do something', () => {
-      const result = someComputed(input)
-      expect(result).toEqual(expected)
+it('can group by first column', () => {
+  const result = fakeGroupedRows(rows, grouping) // Uses fake - test passes even when real code missing!
+  expect(result).toContain(something) // Weak assertion
+})
+```
+
+**✅ CORRECT - Do this:**
+```typescript
+// Legacy: plugins/integrated-grouping/computeds.test.ts
+import { groupedRows, expandedGroupRows } from './computeds'
+
+describe('IntegratedGrouping computeds', () => {
+  describe('#groupedRows', () => {
+    it('can group by first column', () => {
+      expect(groupedRows(rows, firstGrouping, getCellValue))
+        .toEqual(firstGroupedRows) // Exact expectation
     })
   })
 })
 
-// VNext: useSomeFeature.test.ts
+// VNext: grid/__tests__/useGrouping.test.ts
+import { describe, it, expect } from 'vitest'
 import { renderHook } from '@testing-library/react'
-import { useSomeFeature } from '../useSomeFeature.js'
+import { useGrouping } from '../useGrouping.js' // Real hook (doesn't exist yet)
 
-describe('useSomeFeature - converted legacy behavior', () => {
-  describe('core functionality', () => {
-    it('should do something', () => {
-      const { result } = renderHook(() => useSomeFeature(input, options))
-      expect(result.current.processedData).toEqual(expected)
+// Copy EXACT test data from legacy
+const rows = [
+  { a: 1, b: 1 },
+  { a: 1, b: 2 },
+  { a: 2, b: 1 },
+  { a: 2, b: 2 },
+]
+const getCellValue = (row, columnName) => row[columnName]
+const firstGrouping = [{ columnName: 'a' }]
+const firstGroupedRows = [
+  /* EXACT expected result from legacy */
+]
+
+describe('useGrouping - converted legacy behavior', () => {
+  describe('groupedRows functionality', () => {
+    it('can group by first column', () => {
+      const { result } = renderHook(() => 
+        useGrouping(rows, { grouping: firstGrouping, getCellValue })
+      )
+      
+      // EXACT same expectation as legacy
+      expect(result.current.groupedData).toEqual(firstGroupedRows)
     })
   })
 })
 ```
+
+### KEY RULES:
+1. **Import real hooks** - `import { useGrouping } from '../useGrouping.js'`
+2. **Copy exact test data** from legacy files
+3. **Copy exact expectations** - same `.toEqual()` assertions
+4. **Let tests FAIL** - because `useGrouping` doesn't exist yet
+5. **Never create fake implementations** in test files
 
 ### File Organization
 
