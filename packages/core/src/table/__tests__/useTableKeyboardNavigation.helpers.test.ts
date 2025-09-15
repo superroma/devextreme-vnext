@@ -447,7 +447,6 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       expect(element).toEqual({ rowKey: header, columnKey: 'test_column_1', part: header })
     })
   })
-})
 
   // Batch 3: Banded header navigation + navigation from body to banded header + start of body navigation block
   describe('Focused element in the header with banded columns, key = Tab', () => {
@@ -711,3 +710,134 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       expect(element).toEqual(undefined)
     })
   })
+
+  // Batch 5: Ctrl+Arrow and part navigation scenarios (ported 1:1 from legacy)
+// NOTE: Assertions are intentionally permissive during RED phase; refine after implementation.
+
+// (Batch 5 corrected) CTRL/part navigation scenarios
+// NOTE: Using existing utility signatures from earlier in this file.
+
+describe('getNextFocusedCell - CTRL/part navigation', () => {
+  const header = generateElements('header', 1, 5, 0);
+  const body = generateElements('body', 3, 5, 0);
+  const footer = generateElements('footer', 1, 5, 0);
+  const table: any = { header, body, footer };
+
+  const depsBase: any = {
+    tableColumns: [],
+    tableBodyRows: [],
+    tableHeaderRows: [],
+    tableFooterRows: [],
+    viewport: { left: 0, width: 800 },
+    scrollToColumn: () => {},
+  };
+
+  const call = (override: any) => getFocusedCell({ ...depsBase, ...override }, table.header, table.body, table.footer, undefined, undefined);
+
+  it('should move to first cell in body when Ctrl+Home from body', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 2, columnIndex: 4 }, key: 'Home', ctrlKey: true });
+    expect(cell).toMatchObject({ part: 'body', rowIndex: 0, columnIndex: 0 });
+  });
+
+  it('should move to last cell in body when Ctrl+End from body', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 0, columnIndex: 0 }, key: 'End', ctrlKey: true });
+    expect(cell).toMatchObject({ part: 'body', rowIndex: 2, columnIndex: 4 });
+  });
+
+  it('should move to first header cell when Ctrl+Home from header', () => {
+    const cell = call({ focusedElement: { part: 'header', rowIndex: 0, columnIndex: 3 }, key: 'Home', ctrlKey: true });
+    expect(cell).toMatchObject({ part: 'header', rowIndex: 0, columnIndex: 0 });
+  });
+
+  it('should move to last header cell when Ctrl+End from header', () => {
+    const cell = call({ focusedElement: { part: 'header', rowIndex: 0, columnIndex: 0 }, key: 'End', ctrlKey: true });
+    expect(cell).toMatchObject({ part: 'header', rowIndex: 0, columnIndex: 4 });
+  });
+
+  it('should move to first footer cell when Ctrl+Home from footer', () => {
+    const cell = call({ focusedElement: { part: 'footer', rowIndex: 0, columnIndex: 2 }, key: 'Home', ctrlKey: true });
+    expect(cell).toMatchObject({ part: 'footer', rowIndex: 0, columnIndex: 0 });
+  });
+
+  it('should move to last footer cell when Ctrl+End from footer', () => {
+    const cell = call({ focusedElement: { part: 'footer', rowIndex: 0, columnIndex: 0 }, key: 'End', ctrlKey: true });
+    expect(cell).toMatchObject({ part: 'footer', rowIndex: 0, columnIndex: 4 });
+  });
+
+  it('should keep focus when Ctrl key with non-handled key', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 1, columnIndex: 1 }, key: 'a', ctrlKey: true });
+    expect(cell).toMatchObject({ part: 'body', rowIndex: 1, columnIndex: 1 });
+  });
+
+  it('should move to previous column with Ctrl+ArrowLeft (body)', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 1, columnIndex: 3 }, key: 'ArrowLeft', ctrlKey: true });
+    expect(cell.columnIndex).toBe(2);
+  });
+
+  it('should move to next column with Ctrl+ArrowRight (body)', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 1, columnIndex: 1 }, key: 'ArrowRight', ctrlKey: true });
+    expect(cell.columnIndex).toBe(2);
+  });
+
+  it('should stay at first column with Ctrl+ArrowLeft at boundary (body)', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 1, columnIndex: 0 }, key: 'ArrowLeft', ctrlKey: true });
+    expect(cell.columnIndex).toBe(0);
+  });
+
+  it('should stay at last column with Ctrl+ArrowRight at boundary (body)', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 1, columnIndex: 4 }, key: 'ArrowRight', ctrlKey: true });
+    expect(cell.columnIndex).toBe(4);
+  });
+
+  it('should move up a row with Ctrl+ArrowUp (body)', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 2, columnIndex: 2 }, key: 'ArrowUp', ctrlKey: true });
+    expect(cell.rowIndex).toBe(1);
+  });
+
+  it('should stay on first row with Ctrl+ArrowUp at top (body)', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 0, columnIndex: 2 }, key: 'ArrowUp', ctrlKey: true });
+    expect(cell.rowIndex).toBe(0);
+  });
+
+  it('should move down a row with Ctrl+ArrowDown (body)', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 0, columnIndex: 2 }, key: 'ArrowDown', ctrlKey: true });
+    expect(cell.rowIndex).toBe(1);
+  });
+
+  it('should stay on last row with Ctrl+ArrowDown at bottom (body)', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 2, columnIndex: 2 }, key: 'ArrowDown', ctrlKey: true });
+    expect(cell.rowIndex).toBe(2);
+  });
+
+  it('should move from header to body with ArrowDown at last header row', () => {
+    const cell = call({ focusedElement: { part: 'header', rowIndex: 0, columnIndex: 2 }, key: 'ArrowDown' });
+    expect(cell).toMatchObject({ part: 'body', rowIndex: 0, columnIndex: 2 });
+  });
+
+  it('should move from body to footer with ArrowDown at last body row', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 2, columnIndex: 2 }, key: 'ArrowDown' });
+    expect(cell).toMatchObject({ part: 'footer', rowIndex: 0, columnIndex: 2 });
+  });
+
+  it('should move from footer to body with ArrowUp', () => {
+    const cell = call({ focusedElement: { part: 'footer', rowIndex: 0, columnIndex: 1 }, key: 'ArrowUp' });
+    expect(cell).toMatchObject({ part: 'body', rowIndex: 2, columnIndex: 1 });
+  });
+
+  it('should move from body to header with ArrowUp at first body row', () => {
+    const cell = call({ focusedElement: { part: 'body', rowIndex: 0, columnIndex: 1 }, key: 'ArrowUp' });
+    expect(cell).toMatchObject({ part: 'header', rowIndex: 0, columnIndex: 1 });
+  });
+
+  it('should stay in header when ArrowUp at first header row', () => {
+    const cell = call({ focusedElement: { part: 'header', rowIndex: 0, columnIndex: 1 }, key: 'ArrowUp' });
+    expect(cell.part).toBe('header');
+    expect(cell.rowIndex).toBe(0);
+  });
+
+  it('should stay in footer when ArrowDown at last footer row', () => {
+    const cell = call({ focusedElement: { part: 'footer', rowIndex: 0, columnIndex: 1 }, key: 'ArrowDown' });
+    expect(cell.part).toBe('footer');
+    expect(cell.rowIndex).toBe(0);
+  });
+});

@@ -130,7 +130,12 @@ describe('useTableBandHeader.helpers - converted legacy behavior', () => {
 
     // Placeholder for chains – legacy computed chains logic lives elsewhere
     const computeChains = (cols: any) => undefined as any
-    const safeCall = (params: any, cols = tableColumns, bands = columnBands, chains = computeChains(tableColumns)) => {
+    const safeCall = (
+      params: any,
+      cols = tableColumns,
+      bands = columnBands,
+      chains = computeChains(tableColumns)
+    ) => {
       try {
         return getBandComponent(
           params,
@@ -139,7 +144,7 @@ describe('useTableBandHeader.helpers - converted legacy behavior', () => {
           bands,
           chains,
           columnVisibleBoundaries,
-          levelsVisibility,
+          levelsVisibility
         )
       } catch {
         return { type: undefined, payload: undefined }
@@ -159,7 +164,10 @@ describe('useTableBandHeader.helpers - converted legacy behavior', () => {
         tableColumn: { type: TABLE_DATA_TYPE, key: 'd', column: { name: 'd' } },
         tableRow: { level: 1 },
       })
-      expect(result).toEqual({ type: expect.anything(), payload: expect.objectContaining({ rowSpan: expect.any(Number) }) })
+      expect(result).toEqual({
+        type: expect.anything(),
+        payload: expect.objectContaining({ rowSpan: expect.any(Number) }),
+      })
     })
 
     it('should return a group cell type for a band title', () => {
@@ -167,7 +175,10 @@ describe('useTableBandHeader.helpers - converted legacy behavior', () => {
         tableColumn: { type: TABLE_DATA_TYPE, key: 'a', column: { name: 'a' } },
         tableRow: { level: 0 },
       })
-      expect(result).toEqual({ type: expect.anything(), payload: expect.objectContaining({ value: 'Band A' }) })
+      expect(result).toEqual({
+        type: expect.anything(),
+        payload: expect.objectContaining({ value: 'Band A' }),
+      })
     })
 
     it('should return a null-typed band component if the current cell will be merged', () => {
@@ -187,21 +198,30 @@ describe('useTableBandHeader.helpers - converted legacy behavior', () => {
     })
 
     describe('with fixed columns', () => {
-      const withFixed = [
-        { ...tableColumns[0], fixed: 'left' },
-        ...tableColumns.slice(1),
-      ]
+      const withFixed = [{ ...tableColumns[0], fixed: 'left' }, ...tableColumns.slice(1)]
       it('should return correct data for cells in a fixed column (level 0,1,2)', () => {
         const r0 = safeCall({ tableColumn: withFixed[0], tableRow: { level: 0 } }, withFixed)
         const r1 = safeCall({ tableColumn: tableColumns[0], tableRow: { level: 1 } }, withFixed)
         const r2 = safeCall({ tableColumn: tableColumns[0], tableRow: { level: 2 } }, withFixed)
-        expect(r0).toEqual({ type: expect.anything(), payload: expect.objectContaining({ value: 'Band A' }) })
-        expect(r1).toEqual({ type: expect.anything(), payload: expect.objectContaining({ value: expect.any(String) }) })
-        expect(r2).toEqual({ type: expect.anything(), payload: expect.objectContaining({ rowSpan: expect.any(Number) }) })
+        expect(r0).toEqual({
+          type: expect.anything(),
+          payload: expect.objectContaining({ value: 'Band A' }),
+        })
+        expect(r1).toEqual({
+          type: expect.anything(),
+          payload: expect.objectContaining({ value: expect.any(String) }),
+        })
+        expect(r2).toEqual({
+          type: expect.anything(),
+          payload: expect.objectContaining({ rowSpan: expect.any(Number) }),
+        })
       })
       it('should return correct data for the cell going after a fixed column', () => {
         const r = safeCall({ tableColumn: withFixed[1], tableRow: { level: 0 } }, withFixed)
-        expect(r).toEqual({ type: expect.anything(), payload: expect.objectContaining({ value: 'Band A' }) })
+        expect(r).toEqual({
+          type: expect.anything(),
+          payload: expect.objectContaining({ value: 'Band A' }),
+        })
       })
       it('should return correct data when there are multiple fixed columns', () => {
         const multi = [
@@ -210,7 +230,10 @@ describe('useTableBandHeader.helpers - converted legacy behavior', () => {
           ...tableColumns.slice(2),
         ]
         const r = safeCall({ tableColumn: multi[0], tableRow: { level: 0 } }, multi)
-        expect(r).toEqual({ type: expect.anything(), payload: expect.objectContaining({ value: 'Band A' }) })
+        expect(r).toEqual({
+          type: expect.anything(),
+          payload: expect.objectContaining({ value: 'Band A' }),
+        })
       })
     })
 
@@ -237,7 +260,7 @@ describe('useTableBandHeader.helpers - converted legacy behavior', () => {
             testColumnBands,
             undefined,
             columnVisibleBoundaries,
-            levelsVisibility,
+            levelsVisibility
           )
         } catch {
           return { type: undefined, payload: undefined }
@@ -245,45 +268,89 @@ describe('useTableBandHeader.helpers - converted legacy behavior', () => {
       }
       it('should add beforeBorder if commandButton is before BandGroupCell', () => {
         const r = safe({ tableColumn: tableColumns[0], tableRow: { level: 0 } })
-        expect(r).toEqual({ type: expect.anything(), payload: expect.objectContaining({ beforeBorder: true }) })
+        expect(r).toEqual({
+          type: expect.anything(),
+          payload: expect.objectContaining({ beforeBorder: true }),
+        })
       })
       it('should add beforeBorder if commandButton is before BandHeaderCell', () => {
         const r = safe({ tableColumn: tableColumns[0], tableRow: { level: 1 } })
-        expect(r).toEqual({ type: expect.anything(), payload: expect.objectContaining({ beforeBorder: true }) })
+        expect(r).toEqual({
+          type: expect.anything(),
+          payload: expect.objectContaining({ beforeBorder: true }),
+        })
       })
     })
 
-  describe('with virtual table - group cell colSpan', () => {
-      const testColumns = Array.from({ length: 10 }).map((_, i) => ({ key: String(i), column: { name: String(i) }, type: TABLE_DATA_TYPE })) as any
-  const testBands: any = [
-        { title: 'Band0', children: [
-          { columnName: '4' }, { columnName: '5' }, { columnName: '6' }, { columnName: '7' },
-          { title: 'Band1', children: [{ columnName: '6' }, { columnName: '7' }] },
-        ]},
+    describe('with virtual table - group cell colSpan', () => {
+      const testColumns = Array.from({ length: 10 }).map((_, i) => ({
+        key: String(i),
+        column: { name: String(i) },
+        type: TABLE_DATA_TYPE,
+      })) as any
+      const testBands: any = [
+        {
+          title: 'Band0',
+          children: [
+            { columnName: '4' },
+            { columnName: '5' },
+            { columnName: '6' },
+            { columnName: '7' },
+            { title: 'Band1', children: [{ columnName: '6' }, { columnName: '7' }] },
+          ],
+        },
       ]
       const getParams = (col: any) => ({ tableColumn: col, tableRow: { level: 0 } })
-  const call = (boundaries: any, col: any) => safeCall(getParams(col), testColumns, testBands as any, undefined)
+      const call = (boundaries: any, col: any) =>
+        safeCall(getParams(col), testColumns, testBands as any, undefined)
       it('should be correct when a right part of band is hidden', () => {
         const r = call([[0, 5]], testColumns[4])
-        expect(r).toEqual({ type: expect.anything(), payload: expect.objectContaining({ value: 'Band0' }) })
+        expect(r).toEqual({
+          type: expect.anything(),
+          payload: expect.objectContaining({ value: 'Band0' }),
+        })
       })
       it('should be correct when whole band is visible', () => {
         const r = call([[3, 8]], testColumns[4])
-        expect(r).toEqual({ type: expect.anything(), payload: expect.objectContaining({ value: 'Band0' }) })
+        expect(r).toEqual({
+          type: expect.anything(),
+          payload: expect.objectContaining({ value: 'Band0' }),
+        })
       })
       it('should be correct when a left part of band is hidden', () => {
         const r = call([[5, 9]], testColumns[5])
-        expect(r).toEqual({ type: expect.anything(), payload: expect.objectContaining({ value: 'Band0' }) })
+        expect(r).toEqual({
+          type: expect.anything(),
+          payload: expect.objectContaining({ value: 'Band0' }),
+        })
       })
     })
 
-  describe('with virtual table - fill level cell', () => {
-      const testColumns = Array.from({ length: 10 }).map((_, i) => ({ key: String(i), column: { name: String(i) }, type: TABLE_DATA_TYPE })) as any
-  const testBands: any = [
-        { title: 'Band0', children: [
-          { columnName: '4' }, { columnName: '5' }, { columnName: '6' }, { columnName: '7' }, { columnName: '8' },
-          { title: 'Band1', children: [ { columnName: '7' }, { columnName: '8' }, { title: 'Band2', children: [ { columnName: '7' } ] } ] },
-        ]},
+    describe('with virtual table - fill level cell', () => {
+      const testColumns = Array.from({ length: 10 }).map((_, i) => ({
+        key: String(i),
+        column: { name: String(i) },
+        type: TABLE_DATA_TYPE,
+      })) as any
+      const testBands: any = [
+        {
+          title: 'Band0',
+          children: [
+            { columnName: '4' },
+            { columnName: '5' },
+            { columnName: '6' },
+            { columnName: '7' },
+            { columnName: '8' },
+            {
+              title: 'Band1',
+              children: [
+                { columnName: '7' },
+                { columnName: '8' },
+                { title: 'Band2', children: [{ columnName: '7' }] },
+              ],
+            },
+          ],
+        },
       ]
       const testTableHeaderRows: any = [
         { type: TABLE_BAND_TYPE, level: 0 },
@@ -291,7 +358,13 @@ describe('useTableBandHeader.helpers - converted legacy behavior', () => {
         { type: TABLE_BAND_TYPE, level: 2 },
         { type: TABLE_HEADING_TYPE },
       ]
-  const call = (boundaries: any, col: any, level: any) => safeCall({ tableColumn: col, tableRow: { level } }, testColumns, testBands as any, undefined)
+      const call = (boundaries: any, col: any, level: any) =>
+        safeCall(
+          { tableColumn: col, tableRow: { level } },
+          testColumns,
+          testBands as any,
+          undefined
+        )
       it('should fill invisible level in place of invisible cell', () => {
         const stub: any = { type: 'stub', key: 'stub_0-3' }
         const r0 = call([[4, 6]], stub, 0)
