@@ -1,21 +1,29 @@
-# Project Status
+# Project Status (Updated: 2024-XX-XX)
 
 ## Completed ✅
 
-- ✅ Modern monorepo setup (Steps 1-2)
-- ✅ useSorting hook - Complete with comprehensive tests
-- ✅ useFiltering hook - Complete with tree data support
-- ✅ Build system working (TypeScript + tsup)
+- ✅ Steps 1-2: Modern monorepo setup + foundation types/utilities
+- ✅ Step 3: useSorting hook (17 tests, 131% legacy coverage)
+- ✅ Step 4: useFiltering hook (15 tests, 107% legacy coverage)
+- ✅ Step 5: usePaging hook (18 tests, 150% legacy coverage)
+- ✅ Step 6: Basic Grid components + demos (dx-react-grid, dx-react-grid-demos)
+- ✅ Step 7: Turbo build orchestration + Playwright e2e tests
 
-## Next Steps
+## Current Issues Identified
 
-- [ ] usePaging hook
-- [ ] useSelection hook
-- [ ] Basic Grid components
-- [ ] Material-UI integration
+- ❌ **Test over-specification**: New tests (50) > Legacy tests (39)
+- ❌ **Missing paging features**: No hierarchical data pagination (rowsWithPageHeaders)
+- ⚠️ **Build script inconsistency**: Need standardized cross-platform pattern
 
-## Architecture
+## Next Priority
+
+- Fix paging hook to match ALL legacy test requirements (hierarchical data)
+- Standardize build scripts across all packages
+- Verify demo actually works with e2e tests
+
+## Architecture Decisions Made
 
 - Zustand for state management
-- Controlled/uncontrolled hook patterns
-- TypeScript-first with strict mode
+- Two-step build: tsup + tsc (for reliability)
+- 1:1 legacy test conversion (strict rule)
+- Turbo for build orchestration

@@ -86,4 +86,4 @@ grep -c "it(" packages/core/src/grid/__tests__/useHOOK.test.ts
 
 ## Reference Legacy Code
 
-Use `../devextreme-reactive/packages/dx-grid-core/src/plugins/*/computeds.test.ts` for exact test specifications to convert 1:1.
+Use `../devextreme-reactive/` for reference.
