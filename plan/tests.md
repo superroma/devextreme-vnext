@@ -115,8 +115,8 @@ describe('useGrouping - converted legacy behavior', () => {
 
 | Batch | Scope Summary                                            | Files | Status |
 | ----- | -------------------------------------------------------- | ----- | ------ |
-| B1    | Grouping/Selection/Summary (integrated + state reducers) | 7+    | [ ]    |
-| B2    | Sorting/Paging/Filtering/Editing/Search/RowDetail state  | 6     | [ ]    |
+| B1    | Grouping/Selection/Summary (integrated + state reducers) | 7+    | R      |
+| B2    | Sorting/Paging/Filtering/Editing/Search/RowDetail state  | 6     | R      |
 | B3    | Custom grouping/tree/exporter/virtual                    | 5     | [ ]    |
 | B4    | Table plugins (computeds + helpers + column features)    | ~40   | [ ]    |
 | B5    | Utilities + blueprint + leftovers                        | ~15   | [ ]    |
@@ -130,18 +130,18 @@ describe('useGrouping - converted legacy behavior', () => {
 | plugins/integrated-sorting/computeds.test.ts   | grid/**tests**/useSorting.test.ts               | EXISTING | R                              |
 | plugins/integrated-paging/computeds.test.ts    | grid/**tests**/usePaging.test.ts                | EXISTING | R (hierarchical tests missing) |
 | plugins/integrated-filtering/computeds.test.ts | grid/**tests**/useFiltering.test.ts             | EXISTING | R                              |
-| plugins/integrated-grouping/computeds.test.ts  | grid/**tests**/useGrouping.test.ts              | B1       | [S]                            |
-| plugins/integrated-selection/computeds.test.ts | grid/**tests**/useSelection.test.ts             | B1       | [S]                            |
-| plugins/integrated-summary/computeds.test.ts   | grid/**tests**/useSummary.test.ts               | B1       | [S]                            |
-| plugins/grouping-state/reducers.test.ts        | grid/**tests**/useGrouping.state.test.ts        | B1       | [S]                            |
-| plugins/selection-state/reducers.test.ts       | grid/**tests**/useSelection.state.test.ts       | B1       | [S]                            |
-| plugins/summary-state/helpers.test.ts          | grid/**tests**/useSummary.state.helpers.test.ts | B1       | [S]                            |
-| plugins/sorting-state/reducers.test.ts         | grid/**tests**/useSorting.state.test.ts         | B2       | [S]                            |
-| plugins/paging-state/reducers.test.ts          | grid/**tests**/usePaging.state.test.ts          | B2       | [S]                            |
-| plugins/filtering-state/reducers.test.ts       | grid/**tests**/useFiltering.state.test.ts       | B2       | [S]                            |
-| plugins/editing-state/reducers.test.ts         | grid/**tests**/useEditing.state.test.ts         | B2       | [S]                            |
-| plugins/row-detail-state/reducers.test.ts      | grid/**tests**/useRowDetail.state.test.ts       | B2       | [S]                            |
-| plugins/search-state/reducers.test.ts          | grid/**tests**/useSearch.state.test.ts          | B2       | [S]                            |
+| plugins/integrated-grouping/computeds.test.ts  | grid/**tests**/useGrouping.test.ts              | B1       | R                              |
+| plugins/integrated-selection/computeds.test.ts | grid/**tests**/useSelection.test.ts             | B1       | R                              |
+| plugins/integrated-summary/computeds.test.ts   | grid/**tests**/useSummary.test.ts               | B1       | R                              |
+| plugins/grouping-state/reducers.test.ts        | grid/**tests**/useGrouping.state.test.ts        | B1       | R                              |
+| plugins/selection-state/reducers.test.ts       | grid/**tests**/useSelection.state.test.ts       | B1       | R                              |
+| plugins/summary-state/helpers.test.ts          | grid/**tests**/useSummary.state.helpers.test.ts | B1       | R                              |
+| plugins/sorting-state/reducers.test.ts         | grid/**tests**/useSorting.state.test.ts         | B2       | R                              |
+| plugins/paging-state/reducers.test.ts          | grid/**tests**/usePaging.state.test.ts          | B2       | R                              |
+| plugins/filtering-state/reducers.test.ts       | grid/**tests**/useFiltering.state.test.ts       | B2       | R                              |
+| plugins/editing-state/reducers.test.ts         | grid/**tests**/useEditing.state.test.ts         | B2       | R                              |
+| plugins/row-detail-state/reducers.test.ts      | grid/**tests**/useRowDetail.state.test.ts       | B2       | R                              |
+| plugins/search-state/reducers.test.ts          | grid/**tests**/useSearch.state.test.ts          | B2       | R                              |
 
 ### Custom / Tree / Virtual / Exporter
 
@@ -219,9 +219,9 @@ describe('useGrouping - converted legacy behavior', () => {
 
 ## Progress Counters
 
-- Existing converted (sorting/paging/filtering + 3 utils): 6 files.
-- Remaining planned (excluding discrepancy + blueprint decision): ~74.
-- Completion % (initial): 6 / 80 = 7.5%.
+- Existing converted (initial + B1 + B2 + 3 utils): 6 (initial) + 6 (B1) + 6 (B2) = 18 files.
+- Remaining planned (excluding discrepancy + blueprint decision): 80 - 18 = 62.
+- Completion % (updated): 18 / 80 = 22.5%.
 
 ## Batch B1 Implementation Instructions
 
