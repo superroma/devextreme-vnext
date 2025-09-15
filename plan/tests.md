@@ -113,13 +113,13 @@ describe('useGrouping - converted legacy behavior', () => {
 
 ## Batch Progress Overview
 
-| Batch | Scope Summary                                            | Files | Status |
-| ----- | -------------------------------------------------------- | ----- | ------ |
-| B1    | Grouping/Selection/Summary (integrated + state reducers) | 7+    | R      |
-| B2    | Sorting/Paging/Filtering/Editing/Search/RowDetail state  | 6     | R      |
-| B3    | Custom grouping/tree/exporter/virtual                    | 7     | R      |
-| B4    | Table plugins (computeds + helpers + column features)    | ~40   | [ ]    |
-| B5    | Utilities + blueprint + leftovers                        | ~15   | [ ]    |
+| Batch | Scope Summary                                            | Files | Status    |
+| ----- | -------------------------------------------------------- | ----- | --------- |
+| B1    | Grouping/Selection/Summary (integrated + state reducers) | 7+    | R         |
+| B2    | Sorting/Paging/Filtering/Editing/Search/RowDetail state  | 6     | R         |
+| B3    | Custom grouping/tree/exporter/virtual                    | 7     | R         |
+| B4    | Table plugins (computeds + helpers + column features)    | ~40   | R (12/40) |
+| B5    | Utilities + blueprint + leftovers                        | ~15   | [ ]       |
 
 ## Detailed Mapping Table
 
@@ -157,41 +157,41 @@ describe('useGrouping - converted legacy behavior', () => {
 
 ### Table Layer (Representative Subset Listing; full expansion required)
 
-| Legacy File                                         | Target vNext                                               | Batch | Status |
-| --------------------------------------------------- | ---------------------------------------------------------- | ----- | ------ |
-| plugins/table/computeds.test.ts                     | table/**tests**/useTable.test.ts                           | B4    | [S]    |
-| plugins/table/helpers.test.ts                       | table/**tests**/useTable.helpers.test.ts                   | B4    | [S]    |
-| plugins/table-header-row/computeds.test.ts          | table/**tests**/useTableHeaderRow.test.ts                  | B4    | [S]    |
-| plugins/table-header-row/helpers.test.ts            | table/**tests**/useTableHeaderRow.helpers.test.ts          | B4    | [S]    |
-| plugins/table-filter-row/computeds.test.ts          | table/**tests**/useTableFilterRow.test.ts                  | B4    | [S]    |
-| plugins/table-filter-row/helpers.test.ts            | table/**tests**/useTableFilterRow.helpers.test.ts          | B4    | [S]    |
-| plugins/table-group-row/computeds.test.ts           | table/**tests**/useTableGroupRow.test.ts                   | B4    | [S]    |
-| plugins/table-group-row/helpers.test.ts             | table/**tests**/useTableGroupRow.helpers.test.ts           | B4    | [S]    |
-| plugins/table-selection/computeds.test.ts           | table/**tests**/useTableSelection.test.ts                  | B4    | [S]    |
-| plugins/table-selection/helpers.test.ts             | table/**tests**/useTableSelection.helpers.test.ts          | B4    | [S]    |
-| plugins/table-summary-row/computeds.test.ts         | table/**tests**/useTableSummaryRow.test.ts                 | B4    | [S]    |
-| plugins/table-summary-row/helpers.test.ts           | table/**tests**/useTableSummaryRow.helpers.test.ts         | B4    | [S]    |
-| plugins/table-fixed-columns/computeds.test.ts       | table/**tests**/useTableFixedColumns.test.ts               | B4    | [S]    |
-| plugins/table-fixed-columns/helpers.test.ts         | table/**tests**/useTableFixedColumns.helpers.test.ts       | B4    | [S]    |
-| plugins/table-column-resizing/computeds.test.ts     | table/**tests**/useTableColumnResizing.test.ts             | B4    | [S]    |
-| plugins/table-column-resizing/helpers.test.ts       | table/**tests**/useTableColumnResizing.helpers.test.ts     | B4    | [S]    |
-| plugins/table-column-resizing/reducers.test.ts      | table/**tests**/useTableColumnResizing.state.test.ts       | B4    | [S]    |
-| plugins/table-column-reordering/computeds.test.ts   | table/**tests**/useTableColumnReordering.test.ts           | B4    | [S]    |
-| plugins/table-column-reordering/reducers.test.ts    | table/**tests**/useTableColumnReordering.state.test.ts     | B4    | [S]    |
-| plugins/table-column-visibility/computeds.test.ts   | table/**tests**/useTableColumnVisibility.test.ts           | B4    | [S]    |
-| plugins/table-column-visibility/helpers.test.ts     | table/**tests**/useTableColumnVisibility.helpers.test.ts   | B4    | [S]    |
-| plugins/table-inline-cell-editing/computeds.test.ts | table/**tests**/useTableInlineCellEditing.test.ts          | B4    | [S]    |
-| plugins/table-edit-row/computeds.test.ts            | table/**tests**/useTableEditRow.test.ts                    | B4    | [S]    |
-| plugins/table-edit-row/helpers.test.ts              | table/**tests**/useTableEditRow.helpers.test.ts            | B4    | [S]    |
-| plugins/table-edit-column/computeds.test.ts         | table/**tests**/useTableEditColumn.test.ts                 | B4    | [S]    |
-| plugins/table-edit-column/helpers.test.ts           | table/**tests**/useTableEditColumn.helpers.test.ts         | B4    | [S]    |
-| plugins/table-band-header/computeds.test.ts         | table/**tests**/useTableBandHeader.test.ts                 | B4    | [S]    |
-| plugins/table-band-header/helpers.test.ts           | table/**tests**/useTableBandHeader.helpers.test.ts         | B4    | [S]    |
-| plugins/table-keyboard-navigation/computeds.test.ts | table/**tests**/useTableKeyboardNavigation.test.ts         | B4    | [S]    |
-| plugins/table-keyboard-navigation/helpers.test.ts   | table/**tests**/useTableKeyboardNavigation.helpers.test.ts | B4    | [S]    |
-| plugins/table-row-detail/computeds.test.ts          | table/**tests**/useTableRowDetail.test.ts                  | B4    | [S]    |
-| plugins/table-row-detail/helpers.test.ts            | table/**tests**/useTableRowDetail.helpers.test.ts          | B4    | [S]    |
-| plugins/table-tree-column/helpers.test.ts           | table/**tests**/useTableTreeColumn.helpers.test.ts         | B4    | [S]    |
+| Legacy File                                         | Target vNext                                               | Batch | Status      |
+| --------------------------------------------------- | ---------------------------------------------------------- | ----- | ----------- |
+| plugins/table/computeds.test.ts                     | table/**tests**/useTable.test.ts                           | B4    | R           |
+| plugins/table/helpers.test.ts                       | table/**tests**/useTable.helpers.test.ts                   | B4    | R           |
+| plugins/table-header-row/computeds.test.ts          | table/**tests**/useTableHeaderRow.test.ts                  | B4    | R           |
+| plugins/table-header-row/helpers.test.ts            | table/**tests**/useTableHeaderRow.helpers.test.ts          | B4    | R           |
+| plugins/table-filter-row/computeds.test.ts          | table/**tests**/useTableFilterRow.test.ts                  | B4    | R           |
+| plugins/table-filter-row/helpers.test.ts            | table/**tests**/useTableFilterRow.helpers.test.ts          | B4    | R           |
+| plugins/table-group-row/computeds.test.ts           | table/**tests**/useTableGroupRow.test.ts                   | B4    | R (partial) |
+| plugins/table-group-row/helpers.test.ts             | table/**tests**/useTableGroupRow.helpers.test.ts           | B4    | R           |
+| plugins/table-selection/computeds.test.ts           | table/**tests**/useTableSelection.test.ts                  | B4    | R           |
+| plugins/table-selection/helpers.test.ts             | table/**tests**/useTableSelection.helpers.test.ts          | B4    | R           |
+| plugins/table-summary-row/computeds.test.ts         | table/**tests**/useTableSummaryRow.test.ts                 | B4    | R           |
+| plugins/table-summary-row/helpers.test.ts           | table/**tests**/useTableSummaryRow.helpers.test.ts         | B4    | R           |
+| plugins/table-fixed-columns/computeds.test.ts       | table/**tests**/useTableFixedColumns.test.ts               | B4    | [S]         |
+| plugins/table-fixed-columns/helpers.test.ts         | table/**tests**/useTableFixedColumns.helpers.test.ts       | B4    | [S]         |
+| plugins/table-column-resizing/computeds.test.ts     | table/**tests**/useTableColumnResizing.test.ts             | B4    | [S]         |
+| plugins/table-column-resizing/helpers.test.ts       | table/**tests**/useTableColumnResizing.helpers.test.ts     | B4    | [S]         |
+| plugins/table-column-resizing/reducers.test.ts      | table/**tests**/useTableColumnResizing.state.test.ts       | B4    | [S]         |
+| plugins/table-column-reordering/computeds.test.ts   | table/**tests**/useTableColumnReordering.test.ts           | B4    | [S]         |
+| plugins/table-column-reordering/reducers.test.ts    | table/**tests**/useTableColumnReordering.state.test.ts     | B4    | [S]         |
+| plugins/table-column-visibility/computeds.test.ts   | table/**tests**/useTableColumnVisibility.test.ts           | B4    | [S]         |
+| plugins/table-column-visibility/helpers.test.ts     | table/**tests**/useTableColumnVisibility.helpers.test.ts   | B4    | [S]         |
+| plugins/table-inline-cell-editing/computeds.test.ts | table/**tests**/useTableInlineCellEditing.test.ts          | B4    | [S]         |
+| plugins/table-edit-row/computeds.test.ts            | table/**tests**/useTableEditRow.test.ts                    | B4    | [S]         |
+| plugins/table-edit-row/helpers.test.ts              | table/**tests**/useTableEditRow.helpers.test.ts            | B4    | [S]         |
+| plugins/table-edit-column/computeds.test.ts         | table/**tests**/useTableEditColumn.test.ts                 | B4    | [S]         |
+| plugins/table-edit-column/helpers.test.ts           | table/**tests**/useTableEditColumn.helpers.test.ts         | B4    | [S]         |
+| plugins/table-band-header/computeds.test.ts         | table/**tests**/useTableBandHeader.test.ts                 | B4    | [S]         |
+| plugins/table-band-header/helpers.test.ts           | table/**tests**/useTableBandHeader.helpers.test.ts         | B4    | [S]         |
+| plugins/table-keyboard-navigation/computeds.test.ts | table/**tests**/useTableKeyboardNavigation.test.ts         | B4    | [S]         |
+| plugins/table-keyboard-navigation/helpers.test.ts   | table/**tests**/useTableKeyboardNavigation.helpers.test.ts | B4    | [S]         |
+| plugins/table-row-detail/computeds.test.ts          | table/**tests**/useTableRowDetail.test.ts                  | B4    | [S]         |
+| plugins/table-row-detail/helpers.test.ts            | table/**tests**/useTableRowDetail.helpers.test.ts          | B4    | [S]         |
+| plugins/table-tree-column/helpers.test.ts           | table/**tests**/useTableTreeColumn.helpers.test.ts         | B4    | [S]         |
 
 (Additional table plugin mappings can be appended if any missed.)
 
@@ -219,9 +219,9 @@ describe('useGrouping - converted legacy behavior', () => {
 
 ## Progress Counters
 
-- Existing converted (initial + B1 + B2 + B3 + 3 utils): 18 (prev) + 7 (B3) = 25 files.
-- Remaining planned (excluding discrepancy + blueprint decision): 80 - 25 = 55.
-- Completion % (updated): 25 / 80 = 31.25%.
+- Existing converted (initial + B1 + B2 + B3 + 3 utils + 12 table): 25 (prev) + 12 (B4 subset) = 37 files.
+- Remaining planned (excluding discrepancy + blueprint decision): 80 - 37 = 43.
+- Completion % (updated): 37 / 80 = 46.25%.
 
 ## Batch B1 Implementation Instructions
 
