@@ -118,7 +118,7 @@ describe('useGrouping - converted legacy behavior', () => {
 | B1    | Grouping/Selection/Summary (integrated + state reducers) | 7+    | R         |
 | B2    | Sorting/Paging/Filtering/Editing/Search/RowDetail state  | 6     | R         |
 | B3    | Custom grouping/tree/exporter/virtual                    | 7     | R         |
-| B4    | Table plugins (computeds + helpers + column features)    | ~40   | R (12/40) |
+| B4    | Table plugins (computeds + helpers + column features)    | ~40   | R (22/40) |
 | B5    | Utilities + blueprint + leftovers                        | ~15   | [ ]       |
 
 ## Detailed Mapping Table
@@ -171,17 +171,17 @@ describe('useGrouping - converted legacy behavior', () => {
 | plugins/table-selection/helpers.test.ts             | table/**tests**/useTableSelection.helpers.test.ts          | B4    | R           |
 | plugins/table-summary-row/computeds.test.ts         | table/**tests**/useTableSummaryRow.test.ts                 | B4    | R           |
 | plugins/table-summary-row/helpers.test.ts           | table/**tests**/useTableSummaryRow.helpers.test.ts         | B4    | R           |
-| plugins/table-fixed-columns/computeds.test.ts       | table/**tests**/useTableFixedColumns.test.ts               | B4    | [S]         |
-| plugins/table-fixed-columns/helpers.test.ts         | table/**tests**/useTableFixedColumns.helpers.test.ts       | B4    | [S]         |
-| plugins/table-column-resizing/computeds.test.ts     | table/**tests**/useTableColumnResizing.test.ts             | B4    | [S]         |
-| plugins/table-column-resizing/helpers.test.ts       | table/**tests**/useTableColumnResizing.helpers.test.ts     | B4    | [S]         |
-| plugins/table-column-resizing/reducers.test.ts      | table/**tests**/useTableColumnResizing.state.test.ts       | B4    | [S]         |
-| plugins/table-column-reordering/computeds.test.ts   | table/**tests**/useTableColumnReordering.test.ts           | B4    | [S]         |
-| plugins/table-column-reordering/reducers.test.ts    | table/**tests**/useTableColumnReordering.state.test.ts     | B4    | [S]         |
-| plugins/table-column-visibility/computeds.test.ts   | table/**tests**/useTableColumnVisibility.test.ts           | B4    | [S]         |
-| plugins/table-column-visibility/helpers.test.ts     | table/**tests**/useTableColumnVisibility.helpers.test.ts   | B4    | [S]         |
-| plugins/table-inline-cell-editing/computeds.test.ts | table/**tests**/useTableInlineCellEditing.test.ts          | B4    | [S]         |
-| plugins/table-edit-row/computeds.test.ts            | table/**tests**/useTableEditRow.test.ts                    | B4    | [S]         |
+| plugins/table-fixed-columns/computeds.test.ts       | table/**tests**/useTableFixedColumns.test.ts               | B4    | R           |
+| plugins/table-fixed-columns/helpers.test.ts         | table/**tests**/useTableFixedColumns.helpers.test.ts       | B4    | R           |
+| plugins/table-column-resizing/computeds.test.ts     | table/**tests**/useTableColumnResizing.test.ts             | B4    | R           |
+| plugins/table-column-resizing/helpers.test.ts       | table/**tests**/useTableColumnResizing.helpers.test.ts     | B4    | R           |
+| plugins/table-column-resizing/reducers.test.ts      | table/**tests**/useTableColumnResizing.state.test.ts       | B4    | R           |
+| plugins/table-column-reordering/computeds.test.ts   | table/**tests**/useTableColumnReordering.test.ts           | B4    | R           |
+| plugins/table-column-reordering/reducers.test.ts    | table/**tests**/useTableColumnReordering.state.test.ts     | B4    | R           |
+| plugins/table-column-visibility/computeds.test.ts   | table/**tests**/useTableColumnVisibility.test.ts           | B4    | R           |
+| plugins/table-column-visibility/helpers.test.ts     | table/**tests**/useTableColumnVisibility.helpers.test.ts   | B4    | R           |
+| plugins/table-inline-cell-editing/computeds.test.ts | table/**tests**/useTableInlineCellEditing.test.ts          | B4    | R           |
+| plugins/table-edit-row/computeds.test.ts            | table/**tests**/useTableEditRow.test.ts                    | B4    | R           |
 | plugins/table-edit-row/helpers.test.ts              | table/**tests**/useTableEditRow.helpers.test.ts            | B4    | [S]         |
 | plugins/table-edit-column/computeds.test.ts         | table/**tests**/useTableEditColumn.test.ts                 | B4    | [S]         |
 | plugins/table-edit-column/helpers.test.ts           | table/**tests**/useTableEditColumn.helpers.test.ts         | B4    | [S]         |
@@ -219,9 +219,9 @@ describe('useGrouping - converted legacy behavior', () => {
 
 ## Progress Counters
 
-- Existing converted (initial + B1 + B2 + B3 + 3 utils + 12 table): 25 (prev) + 12 (B4 subset) = 37 files.
-- Remaining planned (excluding discrepancy + blueprint decision): 80 - 37 = 43.
-- Completion % (updated): 37 / 80 = 46.25%.
+- Existing converted (initial + B1 + B2 + B3 + 3 utils + 22 table): 25 (prev) + 22 (B4 subset) = 47 files.
+- Remaining planned (excluding discrepancy + blueprint decision): 80 - 47 = 33.
+- Completion % (updated): 47 / 80 = 58.75%.
 
 ## Batch B1 Implementation Instructions
 
