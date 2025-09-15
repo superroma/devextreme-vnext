@@ -117,7 +117,7 @@ describe('useGrouping - converted legacy behavior', () => {
 | ----- | -------------------------------------------------------- | ----- | ------ |
 | B1    | Grouping/Selection/Summary (integrated + state reducers) | 7+    | R      |
 | B2    | Sorting/Paging/Filtering/Editing/Search/RowDetail state  | 6     | R      |
-| B3    | Custom grouping/tree/exporter/virtual                    | 5     | [ ]    |
+| B3    | Custom grouping/tree/exporter/virtual                    | 7     | R      |
 | B4    | Table plugins (computeds + helpers + column features)    | ~40   | [ ]    |
 | B5    | Utilities + blueprint + leftovers                        | ~15   | [ ]    |
 
@@ -147,13 +147,13 @@ describe('useGrouping - converted legacy behavior', () => {
 
 | Legacy File                                   | Target vNext                                        | Batch | Status |
 | --------------------------------------------- | --------------------------------------------------- | ----- | ------ |
-| plugins/custom-grouping/computeds.test.ts     | grid/**tests**/useCustomGrouping.test.ts            | B3    | [S]    |
-| plugins/custom-tree-data/computeds.test.ts    | grid/**tests**/useCustomTreeData.test.ts            | B3    | [S]    |
-| plugins/tree-data-state/reducers.test.ts      | grid/**tests**/useTreeData.state.test.ts            | B3    | [S]    |
-| plugins/virtual-table-state/computeds.test.ts | grid/**tests**/useVirtualTableState.test.ts         | B3    | [S]    |
-| plugins/virtual-table-state/helpers.test.ts   | grid/**tests**/useVirtualTableState.helpers.test.ts | B3    | [S]    |
-| plugins/grid-exporter/computeds.test.ts       | grid/**tests**/useGridExporter.test.ts              | B3    | [S]    |
-| plugins/grid-exporter/helpers.test.ts         | grid/**tests**/useGridExporter.helpers.test.ts      | B3    | [S]    |
+| plugins/custom-grouping/computeds.test.ts     | grid/**tests**/useCustomGrouping.test.ts            | B3    | R      |
+| plugins/custom-tree-data/computeds.test.ts    | grid/**tests**/useCustomTreeData.test.ts            | B3    | R      |
+| plugins/tree-data-state/reducers.test.ts      | grid/**tests**/useTreeData.state.test.ts            | B3    | R      |
+| plugins/virtual-table-state/computeds.test.ts | grid/**tests**/useVirtualTableState.test.ts         | B3    | R      |
+| plugins/virtual-table-state/helpers.test.ts   | grid/**tests**/useVirtualTableState.helpers.test.ts | B3    | R      |
+| plugins/grid-exporter/computeds.test.ts       | grid/**tests**/useGridExporter.test.ts              | B3    | R      |
+| plugins/grid-exporter/helpers.test.ts         | grid/**tests**/useGridExporter.helpers.test.ts      | B3    | R      |
 
 ### Table Layer (Representative Subset Listing; full expansion required)
 
@@ -219,9 +219,9 @@ describe('useGrouping - converted legacy behavior', () => {
 
 ## Progress Counters
 
-- Existing converted (initial + B1 + B2 + 3 utils): 6 (initial) + 6 (B1) + 6 (B2) = 18 files.
-- Remaining planned (excluding discrepancy + blueprint decision): 80 - 18 = 62.
-- Completion % (updated): 18 / 80 = 22.5%.
+- Existing converted (initial + B1 + B2 + B3 + 3 utils): 18 (prev) + 7 (B3) = 25 files.
+- Remaining planned (excluding discrepancy + blueprint decision): 80 - 25 = 55.
+- Completion % (updated): 25 / 80 = 31.25%.
 
 ## Batch B1 Implementation Instructions
 

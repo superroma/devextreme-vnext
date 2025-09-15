@@ -7,9 +7,8 @@ import { setCurrentPage } from '../usePagingState.js'
 describe('usePaging.state - converted legacy behavior', () => {
   describe('#setCurrentPage', () => {
     it('should work', () => {
-      const state = { currentPage: 0 } as any;
-      expect((setCurrentPage as any)(state, 1))
-        .toEqual({ currentPage: 1 });
-    });
-  });
-});
+      const state = { currentPage: 0 } as any
+      expect((setCurrentPage as any)(state, 1)).toEqual({ currentPage: 1 })
+    })
+  })
+})

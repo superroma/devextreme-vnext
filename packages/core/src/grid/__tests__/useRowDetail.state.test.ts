@@ -6,14 +6,15 @@ import { toggleDetailRowExpanded } from '../useRowDetailState.js'
 
 vi.mock('../../utils/toggle', () => ({
   toggle: vi.fn(() => [1]),
-}));
+}))
 
 describe('useRowDetail.state - converted legacy behavior', () => {
   describe('#toggleDetailRowExpanded', () => {
     it('should work', () => {
-      const state = { expandedDetailRowIds: [] } as any;
-      expect((toggleDetailRowExpanded as any)(state, { rowIds: [1] }))
-        .toEqual({ expandedDetailRowIds: [1] });
-    });
-  });
-});
+      const state = { expandedDetailRowIds: [] } as any
+      expect((toggleDetailRowExpanded as any)(state, { rowIds: [1] })).toEqual({
+        expandedDetailRowIds: [1],
+      })
+    })
+  })
+})

@@ -7,9 +7,8 @@ import { changeSearchValue } from '../useSearchState.js'
 describe('useSearch.state - converted legacy behavior', () => {
   describe('#changeSearchValue', () => {
     it('should work', () => {
-      const state = { value: '' } as any;
-      expect((changeSearchValue as any)(state, 'abc'))
-        .toEqual({ value: 'abc' });
-    });
-  });
-});
+      const state = { value: '' } as any
+      expect((changeSearchValue as any)(state, 'abc')).toEqual({ value: 'abc' })
+    })
+  })
+})
