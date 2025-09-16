@@ -188,7 +188,7 @@ describe('useGrouping - converted legacy behavior', () => {
 | plugins/table-band-header/computeds.test.ts         | table/**tests**/useTableBandHeader.test.ts                 | B4    | R           |
 | plugins/table-band-header/helpers.test.ts           | table/**tests**/useTableBandHeader.helpers.test.ts         | B4    | R           |
 | plugins/table-keyboard-navigation/computeds.test.ts | table/**tests**/useTableKeyboardNavigation.test.ts         | B4    | R           |
-| plugins/table-keyboard-navigation/helpers.test.ts   | table/**tests**/useTableKeyboardNavigation.helpers.test.ts | B4    | R (112/136) |
+| plugins/table-keyboard-navigation/helpers.test.ts   | table/**tests**/useTableKeyboardNavigation.helpers.test.ts | B4    | R (136/136) |
 | plugins/table-row-detail/computeds.test.ts          | table/**tests**/useTableRowDetail.test.ts                  | B4    | R           |
 | plugins/table-row-detail/helpers.test.ts            | table/**tests**/useTableRowDetail.helpers.test.ts          | B4    | R           |
 | plugins/table-tree-column/helpers.test.ts           | table/**tests**/useTableTreeColumn.helpers.test.ts         | B4    | R           |
@@ -220,8 +220,8 @@ describe('useGrouping - converted legacy behavior', () => {
 ## Progress Counters
 
 - Existing converted (initial + B1 + B2 + B3 + utils + table): Previously 56 files; table helpers/computeds additions keep file count same, but keyboard navigation helpers progress advanced.
-- Keyboard navigation helpers migrated tests: 112 / 136 (Batch 7 added 20 tests; prior 92).
-- Remaining keyboard navigation helper tests: 24.
+- Keyboard navigation helpers migrated tests: 136 / 136 (scope A complete).
+- Remaining keyboard navigation helper tests: 0 (scope A definition; helper utility blocks deferred).
 - Table plugin files running: 34 / ~40 (band-header helpers now fully populated; keyboard navigation helpers in progress with partial suite).
 - Completion % (files perspective, still 56 / 80 = 70%).
 

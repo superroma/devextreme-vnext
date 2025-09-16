@@ -1726,4 +1726,488 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       expect(element).toEqual({ rowKey: `${GROUP_TYPE}_4`, columnKey: 'test_column_1', part: body })
     })
   })
+
+  // Final batch (scope A): remaining 24 tests (group rows tail + Enter + Escape + Space + Tree core)
+  describe('Navigation on group rows (tail scope A)', () => {
+    const GROUP_TYPE = 'group'
+    const body = 'data'
+    const summary = 'summary'
+    const tableColumns: any = [
+      { key: 'test_column_1' },
+      { key: 'test_column_2' },
+      { key: 'test_column_3' },
+      { key: 'test_column_4' },
+    ]
+    const tableBodyRows: any = [
+      { key: `${GROUP_TYPE}_1` },
+      { key: `${GROUP_TYPE}_2` },
+      { key: 'test_row_3' },
+      { key: `${GROUP_TYPE}_4` },
+    ]
+    const columns: any = [
+      { key: 'test_column_1' },
+      { key: 'test_column_3' },
+    ]
+    const generatedElements: any = generateElements(columns, tableBodyRows, [], 0)
+    const refElement = { current: { querySelectorAll: () => [] } }
+    generatedElements.test_row_3.test_column_2 = [refElement]
+    generatedElements.test_row_3.test_column_4 = [refElement]
+
+    it('should return last cell from body, summary focused', () => {
+      const innerElements = [
+        { hasAttribute: () => false, getAttribute: () => '1' },
+        { hasAttribute: () => false, getAttribute: () => '1' },
+      ]
+      generatedElements.paging = [] as any
+      generatedElements.paging.none = [
+        { current: { querySelectorAll: () => innerElements } },
+      ]
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'Tab', shiftKey: true, target: innerElements[0] }
+      )
+      expect(element).toEqual({
+        rowKey: `${GROUP_TYPE}_4`,
+        columnKey: 'test_column_3',
+        part: body,
+      })
+    })
+
+    it('should return cell from summary row', () => {
+      const elements = generateElements(columns, tableBodyRows, [summary], 0)
+      const focusedElement = {
+        rowKey: `${GROUP_TYPE}_4`,
+        columnKey: 'test_column_3',
+        part: body,
+      }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        elements,
+        { key: 'Tab' },
+        focusedElement
+      )
+      expect(element).toEqual({
+        rowKey: summary,
+        columnKey: 'test_column_1',
+        part: summary,
+      })
+    })
+  })
+
+  describe('Enter action (scope A)', () => {
+    const tableHeaderRows: any = [{ key: 'heading' }]
+    const expandedRowIds: any[] = []
+    const body = 'data'
+    const tableColumns: any = [
+      { key: 'test_column_1' },
+      { key: 'test_column_2' },
+      { key: 'test_column_3' },
+      { key: 'test_column_4' },
+    ]
+    const tableBodyRows: any = [
+      { key: 'test_row_1' },
+      { key: 'test_row_2' },
+      { key: 'test_row_3' },
+    ]
+
+    it('should return focused element from cell on action on cell, input type text', () => {
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Enter' },
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body })
+    })
+
+    it('should not return focused element from cell on action on cell, input type checkbox', () => {
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'checkbox' })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Enter' },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+    })
+
+    it('should return cell on enter action on its input', () => {
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Enter' },
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_2', part: body })
+    })
+
+    it('should return span from cell on action on cell', () => {
+      const click = vi.fn()
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'SPAN', type: '', action: click })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Enter' },
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body })
+      expect(click).toBeCalled()
+    })
+
+    it('should not return focused element on action on span', () => {
+      const click = vi.fn()
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'SPAN', type: '', action: click })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Enter' },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+      expect(click).not.toBeCalled()
+    })
+
+    it('should not return focused element on action on cell with other elements', () => {
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [])
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 1, part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Enter' },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+    })
+
+    it('should not return focused element on action on cell, cell empty', () => {
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 0)
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Enter' },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+    })
+
+    it('should not return focused element, current focused element is undefined', () => {
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Enter' }
+      )
+      expect(element).toEqual(undefined)
+    })
+  })
+
+  describe('Escape action (scope A)', () => {
+    const tableHeaderRows: any = [{ key: 'heading' }]
+    const expandedRowIds: any[] = []
+    const body = 'data'
+    const tableColumns: any = [
+      { key: 'test_column_1' },
+      { key: 'test_column_2' },
+      { key: 'test_column_3' },
+      { key: 'test_column_4' },
+    ]
+    const tableBodyRows: any = [
+      { key: 'test_row_1' },
+      { key: 'test_row_2' },
+      { key: 'test_row_3' },
+    ]
+
+    it('should return cell on escape action on input', () => {
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Escape' },
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_2', part: body })
+    })
+
+    it('should not return focused element on escape action on cell', () => {
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: 'body' }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Escape' },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+    })
+
+    it('should not return focused element on escape action on span', () => {
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'SPAN' })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Escape' },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+    })
+
+    it('should not return focused element on escape action on cell with other elements', () => {
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [])
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: 'body' }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Escape' },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+    })
+
+    it('should not return focused element on action on cell, cell empty', () => {
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 0)
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: 'body' }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Escape' },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+    })
+
+    it('should not return focused element, focusedElement is undefined', () => {
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Escape' }
+      )
+      expect(element).toEqual(undefined)
+    })
+  })
+
+  describe('Space action on checkbox (scope A)', () => {
+    const tableHeaderRows: any[] = []
+    const expandedRowIds: any[] = []
+    const body = 'data'
+    const tableColumns: any = [
+      { key: 'test_column_1' },
+      { key: 'test_column_2' },
+      { key: 'test_column_3' },
+      { key: 'test_column_4' },
+    ]
+    const tableBodyRows: any = [
+      { key: 'test_row_1' },
+      { key: 'test_row_2' },
+      { key: 'test_row_3' },
+    ]
+
+    it('should call ection', () => {
+      const click = vi.fn()
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'checkbox', action: click })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: ' ' },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+      expect(click).toBeCalled()
+    })
+
+    it('should not call ection, no focused element', () => {
+      const click = vi.fn()
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'checkbox', action: click })
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: ' ' }
+      )
+      expect(element).toEqual(undefined)
+      expect(click).not.toBeCalled()
+    })
+
+    it('should not call action, focused inner element', () => {
+      const click = vi.fn()
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'checkbox', action: click })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 1, part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: ' ' },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+      expect(click).not.toBeCalled()
+    })
+
+    it('should not call action, input type is button', () => {
+      const click = vi.fn()
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'button', action: click })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: ' ' },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+      expect(click).not.toBeCalled()
+    })
+  })
+
+  describe('Collapse/expand row in tree mode (scope A core)', () => {
+    const tableColumns: any = [
+      { key: 'test_column_1' },
+      { key: 'test_column_2' },
+      { key: 'test_column_3' },
+      { key: 'test_column_4' },
+    ]
+    const tableBodyRows: any = [
+      { key: 'test_row_1' },
+      { key: 'test_row_2' },
+      { key: 'test_row_3' },
+    ]
+    const body = 'data'
+
+    it('should expand row', () => {
+      const click = vi.fn()
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { action: click })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'ArrowRight', ctrlKey: true },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+      expect(click).toBeCalled()
+    })
+
+    it('should not expand row, row expanded already', () => {
+      const click = vi.fn()
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { action: click })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [2],
+        generatedElements,
+        { key: 'ArrowRight', ctrlKey: true },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+      expect(click).not.toBeCalled()
+    })
+
+    it('should collapse row', () => {
+      const click = vi.fn()
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { action: click })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [2],
+        generatedElements,
+        { key: 'ArrowLeft', ctrlKey: true },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+      expect(click).toBeCalled()
+    })
+
+    it('should not collapse row, raw collapsed already', () => {
+      const click = vi.fn()
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { action: click })
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'ArrowLeft', ctrlKey: true },
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+      expect(click).not.toBeCalled()
+    })
+  })
 })
