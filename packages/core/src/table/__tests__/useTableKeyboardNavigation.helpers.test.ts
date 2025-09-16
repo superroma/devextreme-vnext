@@ -1,6 +1,6 @@
 // Converted from: packages/dx-grid-core/src/plugins/table-keyboard-navigation/helpers.test.ts
 // Phase: RED (Step 08)
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 
 // Real helpers (to be implemented) – placeholder import; failures expected
 // eslint-disable-next-line import/no-unresolved
@@ -13,7 +13,7 @@ const generateElements = (
   extraParts: string[],
   innerElementsCount = 2,
   extraProps?: any,
-  toScroll?: boolean,
+  toScroll?: boolean
 ) => {
   const innerElements: any[] = []
   for (let i = 0; i < innerElementsCount; i += 1) {
@@ -53,7 +53,7 @@ const getFocusedCell = (
   expandedRowIds: any,
   elements: any,
   event: any,
-  focusedElement?: any,
+  focusedElement?: any
 ) => {
   try {
     return getNextFocusedCell(
@@ -65,7 +65,7 @@ const getFocusedCell = (
       event,
       {}, // inlineEditing placeholder
       focusedElement,
-      undefined,
+      undefined
     )
   } catch {
     return { element: undefined }
@@ -84,11 +84,7 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       { key: 'test_column_3' },
       { key: 'test_column_4' },
     ]
-    const tableBodyRows: any = [
-      { key: 'test_row_1' },
-      { key: 'test_row_2' },
-      { key: 'test_row_3' },
-    ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
     const body = 'data' // TABLE_DATA_TYPE placeholder
     const header = 'heading' // TABLE_HEADING_TYPE placeholder
     const filter = 'filter' // TABLE_FILTER_TYPE placeholder
@@ -103,7 +99,7 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
         tableHeaderRows,
         expandedRowIds,
         elements,
-        { key, target: elements[header].test_column_1[0].current },
+        { key, target: elements[header].test_column_1[0].current }
       )
       expect(element).toEqual({
         rowKey: header,
@@ -121,7 +117,7 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
         tableHeaderRows,
         expandedRowIds,
         elements,
-        { key, target: elements.test_row_1.test_column_1[0].current },
+        { key, target: elements.test_row_1.test_column_1[0].current }
       )
       expect(element).toEqual({
         rowKey: 'test_row_1',
@@ -139,7 +135,7 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
         tableHeaderRows,
         expandedRowIds,
         elements,
-        { key, shiftKey: true, target: elements.test_row_3.test_column_4[0].current },
+        { key, shiftKey: true, target: elements.test_row_3.test_column_4[0].current }
       )
       expect(element).toEqual({
         rowKey: 'test_row_3',
@@ -156,7 +152,7 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
         tableHeaderRows,
         expandedRowIds,
         {},
-        { key },
+        { key }
       )
       expect(element).toBe(undefined)
     })
@@ -169,7 +165,7 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
         tableHeaderRows,
         expandedRowIds,
         elements,
-        { key: 'Enter' },
+        { key: 'Enter' }
       )
       expect(element).toBe(undefined)
     })
@@ -188,7 +184,7 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
         tableHeaderRows,
         expandedRowIds,
         generatedElements,
-        { key: 'Tab', target: innerElements[1] },
+        { key: 'Tab', target: innerElements[1] }
       )
       expect(element).toEqual({
         rowKey: header,
@@ -212,7 +208,7 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
         tableHeaderRows,
         expandedRowIds,
         generatedElements,
-        { key: 'Tab', target: innerElements[0] },
+        { key: 'Tab', target: innerElements[0] }
       )
       expect(element).toEqual(undefined)
     })
@@ -231,7 +227,7 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
         tableHeaderRows,
         expandedRowIds,
         generatedElements,
-        { key: 'Tab', shiftKey: true, target: innerElements[0] },
+        { key: 'Tab', shiftKey: true, target: innerElements[0] }
       )
       expect(element).toEqual({
         rowKey: 'test_row_3',
@@ -255,7 +251,7 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
         tableHeaderRows,
         expandedRowIds,
         generatedElements,
-        { key: 'Tab', shiftKey: true, target: innerElements[1] },
+        { key: 'Tab', shiftKey: true, target: innerElements[1] }
       )
       expect(element).toEqual(undefined)
     })
@@ -272,11 +268,7 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       { key: 'test_column_3' },
       { key: 'test_column_4' },
     ]
-    const tableBodyRows: any = [
-      { key: 'test_row_1' },
-      { key: 'test_row_2' },
-      { key: 'test_row_3' },
-    ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
     const tableHeaderRows: any = [{ key: header }]
     const elements = generateElements(tableColumns, tableBodyRows, [filter, header])
     const expandedRowIds: any[] = []
@@ -284,8 +276,13 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     it('should return next element in the cell, tab key pressed', () => {
       const focusedElement = { rowKey: header, columnKey: 'test_column_2', part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key },
+        focusedElement
       )
       expect(element).toEqual({
         rowKey: header,
@@ -298,8 +295,13 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     it('should return prev element in the cell, tab + shift key pressed', () => {
       const focusedElement = { rowKey: header, columnKey: 'test_column_2', index: 1, part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key, shiftKey: true }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key, shiftKey: true },
+        focusedElement
       )
       expect(element).toEqual({
         rowKey: header,
@@ -312,8 +314,13 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     it('should return next cell, tab key pressed', () => {
       const focusedElement = { rowKey: header, columnKey: 'test_column_2', index: 1, part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key },
+        focusedElement
       )
       expect(element).toEqual({
         rowKey: header,
@@ -326,8 +333,13 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     it('should return prev cell, tab + shift pressed', () => {
       const focusedElement = { rowKey: header, columnKey: 'test_column_2', part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key, shiftKey: true }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key, shiftKey: true },
+        focusedElement
       )
       expect(element).toEqual({
         rowKey: header,
@@ -340,8 +352,13 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     it('should return first cell from filter, tab key pressed', () => {
       const focusedElement = { rowKey: header, columnKey: 'test_column_4', index: 1, part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key },
+        focusedElement
       )
       expect(element).toEqual({
         rowKey: filter,
@@ -354,8 +371,13 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     it('should not return focused element, tab + shift pressed', () => {
       const focusedElement = { rowKey: header, columnKey: 'test_column_1', index: 0, part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key, shiftKey: true }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key, shiftKey: true },
+        focusedElement
       )
       expect(element).toEqual(undefined)
     })
@@ -363,8 +385,13 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     it('should not return focused element, arrow left key pressed', () => {
       const focusedElement = { rowKey: header, columnKey: 'test_column_2', index: 0, part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'ArrowLeft' }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'ArrowLeft' },
+        focusedElement
       )
       expect(element).toEqual(undefined)
     })
@@ -372,8 +399,13 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     it('should not return cell, arrow up key pressed', () => {
       const focusedElement = { rowKey: header, columnKey: 'test_column_2', index: 1, part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'ArrowUp' }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'ArrowUp' },
+        focusedElement
       )
       expect(element).toBe(undefined)
     })
@@ -381,68 +413,107 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     it('should not return cell, some another key pressed', () => {
       const focusedElement = { rowKey: header, columnKey: 'test_column_2', index: 1, part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'SomeKey' }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'SomeKey' },
+        focusedElement
       )
       expect(element).toBe(undefined)
     })
 
     it('should return cell from filter, tab key pressed, cell with input - text', () => {
-      const generatedElements = generateElements(
-        tableColumns, tableBodyRows, [filter, header], 2, { tagName: 'INPUT', type: 'text' },
-      )
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [filter, header], 2, {
+        tagName: 'INPUT',
+        type: 'text',
+      })
       const focusedElement = { rowKey: header, columnKey: 'test_column_4', index: 1, part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, generatedElements, { key }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key },
+        focusedElement
       )
       expect(element).toEqual({ rowKey: filter, columnKey: 'test_column_1', part: filter })
     })
 
     it('should return cell from filter, tab key pressed, cell with input - checkbox', () => {
-      const generatedElements = generateElements(
-        tableColumns, tableBodyRows, [filter, header], 2, { tagName: 'INPUT', type: 'checkbox' },
-      )
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [filter, header], 2, {
+        tagName: 'INPUT',
+        type: 'checkbox',
+      })
       const focusedElement = { rowKey: header, columnKey: 'test_column_4', index: 1, part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, generatedElements, { key }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key },
+        focusedElement
       )
-      expect(element).toEqual({ rowKey: filter, columnKey: 'test_column_1', index: 0, part: filter })
+      expect(element).toEqual({
+        rowKey: filter,
+        columnKey: 'test_column_1',
+        index: 0,
+        part: filter,
+      })
     })
 
     it('should return cell from filter, tab key pressed, cell contain span component', () => {
-      const generatedElements = generateElements(
-        tableColumns, tableBodyRows, [filter, header], 2, { tagName: 'SPAN' },
-      )
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [filter, header], 2, {
+        tagName: 'SPAN',
+      })
       const focusedElement = { rowKey: header, columnKey: 'test_column_4', index: 1, part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, generatedElements, { key }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key },
+        focusedElement
       )
       expect(element).toEqual({ rowKey: filter, columnKey: 'test_column_1', part: filter })
     })
 
     it('should return next cell, tab key pressed, cell containes input component', () => {
-      const generatedElements = generateElements(
-        tableColumns, tableBodyRows, [header], 2, { tagName: 'INPUT', type: 'text' },
-      )
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [header], 2, {
+        tagName: 'INPUT',
+        type: 'text',
+      })
       const focusedElement = { rowKey: header, columnKey: 'test_column_2', index: 1, part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, generatedElements, { key }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key },
+        focusedElement
       )
       expect(element).toEqual({ rowKey: header, columnKey: 'test_column_3', part: header })
     })
 
     it('should return prev cell, tab + shift key pressed, cell containes input component', () => {
-      const generatedElements = generateElements(
-        tableColumns, tableBodyRows, [header], 2, { tagName: 'INPUT', type: 'text' },
-      )
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [header], 2, {
+        tagName: 'INPUT',
+        type: 'text',
+      })
       const focusedElement = { rowKey: header, columnKey: 'test_column_2', part: header }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, generatedElements, { key: 'Tab', shiftKey: true }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Tab', shiftKey: true },
+        focusedElement
       )
       expect(element).toEqual({ rowKey: header, columnKey: 'test_column_1', part: header })
     })
@@ -460,59 +531,102 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       { key: 'test_column_3' },
       { key: 'test_column_4' },
     ]
-    const tableBodyRows: any = [
-      { key: 'test_row_1' },
-      { key: 'test_row_2' },
-      { key: 'test_row_3' },
-    ]
-    const tableHeaderRows: any = [
-      { key: `${band}_0` }, { key: `${band}_1` }, { key: header },
-    ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
+    const tableHeaderRows: any = [{ key: `${band}_0` }, { key: `${band}_1` }, { key: header }]
     const expandedRowIds: any[] = []
     const elements: any = generateElements(tableColumns, tableBodyRows, [filter])
     const refElement = { current: { querySelectorAll: () => [] } }
-    elements[`${band}_0`] = { test_column_1: [refElement], test_column_2: [refElement], test_column_4: [refElement] }
-    elements[`${band}_1`] = { test_column_2: [refElement], test_column_3: [refElement], test_column_4: [refElement] }
+    elements[`${band}_0`] = {
+      test_column_1: [refElement],
+      test_column_2: [refElement],
+      test_column_4: [refElement],
+    }
+    elements[`${band}_1`] = {
+      test_column_2: [refElement],
+      test_column_3: [refElement],
+      test_column_4: [refElement],
+    }
     elements[header] = { test_column_4: [refElement] }
 
     it('should return next cell for band_0', () => {
       const focusedElement = { rowKey: `${band}_0`, columnKey: 'test_column_1', part: header }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: `${band}_0`, columnKey: 'test_column_2', part: header })
     })
 
     it('should return cell from band_1', () => {
       const focusedElement = { rowKey: `${band}_0`, columnKey: 'test_column_4', part: header }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: `${band}_1`, columnKey: 'test_column_2', part: header })
     })
 
     it('should return cell from header', () => {
       const focusedElement = { rowKey: `${band}_1`, columnKey: 'test_column_4', part: header }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: header, columnKey: 'test_column_4', part: header })
     })
 
     it('should return cell from band_1, shift key pressed', () => {
       const focusedElement = { rowKey: header, columnKey: 'test_column_4', part: header }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key, shiftKey: true }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key, shiftKey: true },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: `${band}_1`, columnKey: 'test_column_4', part: header })
     })
 
     it('should return cell for band_0, shift key pressed', () => {
       const focusedElement = { rowKey: `${band}_0`, columnKey: 'test_column_4', part: header }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key, shiftKey: true }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key, shiftKey: true },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: `${band}_0`, columnKey: 'test_column_2', part: header })
     })
 
     it('should return cell from band_0, no focused cell', () => {
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key, target: elements[`${band}_0`].test_column_1[0].current })
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key, target: elements[`${band}_0`].test_column_1[0].current }
+      )
       expect(element).toEqual({ rowKey: `${band}_0`, columnKey: 'test_column_1', part: header })
     })
   })
@@ -528,18 +642,29 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       { key: 'test_column_3' },
       { key: 'test_column_4' },
     ]
-    const tableBodyRows: any = [ { key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' } ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
     const tableHeaderRows: any = [{ key: `${band}_0` }, { key: header }]
     const expandedRowIds: any[] = []
     const elements: any = generateElements(tableColumns, tableBodyRows, [])
     const refElement = { current: { querySelectorAll: () => [] } }
-    elements[`${band}_0`] = { test_column_1: [refElement], test_column_2: [refElement], test_column_4: [refElement] }
+    elements[`${band}_0`] = {
+      test_column_1: [refElement],
+      test_column_2: [refElement],
+      test_column_4: [refElement],
+    }
     elements[header] = { test_column_2: [refElement], test_column_3: [refElement] }
 
     it('should return correct cell from head', () => {
       const focusedElement = { rowKey: 'test_row_1', columnKey: 'test_column_1', part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key, shiftKey: true }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key, shiftKey: true },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: header, columnKey: 'test_column_3', part: header })
     })
   })
@@ -554,48 +679,114 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       { key: 'test_column_3' },
       { key: 'test_column_4' },
     ]
-    const tableBodyRows: any = [
-      { key: 'test_row_1' },
-      { key: 'test_row_2' },
-      { key: 'test_row_3' },
-    ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
     const elements = generateElements(tableColumns, tableBodyRows, [filter, header])
     const tableHeaderRows: any = [{ key: header }]
     const expandedRowIds: any[] = []
 
     it('should return next element in the cell, tab key pressed', () => {
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'Tab' }, focusedElement)
-      expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_2', index: 1, part: body })
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 0,
+        part: body,
+      }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'Tab' },
+        focusedElement
+      )
+      expect(element).toEqual({
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 1,
+        part: body,
+      })
     })
 
     it('should return prev cell, tab + shift key pressed', () => {
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'Tab', shiftKey: true }, focusedElement)
-      expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_1', index: 1, part: body })
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'Tab', shiftKey: true },
+        focusedElement
+      )
+      expect(element).toEqual({
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_1',
+        index: 1,
+        part: body,
+      })
     })
 
     it('should return next cell, tab key pressed', () => {
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 1, part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'Tab' }, focusedElement)
-      expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_3', index: 0, part: body })
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 1,
+        part: body,
+      }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'Tab' },
+        focusedElement
+      )
+      expect(element).toEqual({
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_3',
+        index: 0,
+        part: body,
+      })
     })
 
     it('should return prev cell, tab + shift key pressed (second case)', () => {
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'Tab', shiftKey: true }, focusedElement)
-      expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_1', index: 1, part: body })
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'Tab', shiftKey: true },
+        focusedElement
+      )
+      expect(element).toEqual({
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_1',
+        index: 1,
+        part: body,
+      })
     })
 
     it('should return last cell from filter, tab + shift key pressed', () => {
       const focusedElement = { rowKey: 'test_row_1', columnKey: 'test_column_1', part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'Tab', shiftKey: true }, focusedElement)
-      expect(element).toEqual({ rowKey: filter, columnKey: 'test_column_4', index: 1, part: filter })
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'Tab', shiftKey: true },
+        focusedElement
+      )
+      expect(element).toEqual({
+        rowKey: filter,
+        columnKey: 'test_column_4',
+        index: 1,
+        part: filter,
+      })
     })
   })
 
@@ -610,234 +801,929 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       { key: 'test_column_3' },
       { key: 'test_column_4' },
     ]
-    const tableBodyRows: any = [
-      { key: 'test_row_1' },
-      { key: 'test_row_2' },
-      { key: 'test_row_3' },
-    ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
     const elements = generateElements(tableColumns, tableBodyRows, [filter, header])
     const tableHeaderRows: any = [{ key: header }]
     const expandedRowIds: any[] = []
 
     it('should return next element of cell', () => {
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_4', index: 0, part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'Tab' }, focusedElement)
-      expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_4', index: 1, part: body })
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_4',
+        index: 0,
+        part: body,
+      }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'Tab' },
+        focusedElement
+      )
+      expect(element).toEqual({
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_4',
+        index: 1,
+        part: body,
+      })
     })
     it('should not return focused element after last one, tab pressed', () => {
-      const focusedElement = { rowKey: 'test_row_3', columnKey: 'test_column_4', index: 1, part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'Tab' }, focusedElement)
+      const focusedElement = {
+        rowKey: 'test_row_3',
+        columnKey: 'test_column_4',
+        index: 1,
+        part: body,
+      }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'Tab' },
+        focusedElement
+      )
       expect(element).toEqual(undefined)
     })
     it('should return next cell, arrow right pressed', () => {
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'ArrowRight' }, focusedElement)
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 0,
+        part: body,
+      }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'ArrowRight' },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_3', part: body })
     })
     it('should return prev cell, arrow left pressed', () => {
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'ArrowLeft' }, focusedElement)
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 0,
+        part: body,
+      }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'ArrowLeft' },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_1', part: body })
     })
     it('should return cell over current cell, arrow up pressed', () => {
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'ArrowUp' }, focusedElement)
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 0,
+        part: body,
+      }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'ArrowUp' },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: 'test_row_1', columnKey: 'test_column_2', part: body })
     })
     it('should return cell under current cell, arrow down pressed', () => {
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'ArrowDown' }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'ArrowDown' },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: 'test_row_3', columnKey: 'test_column_2', part: body })
     })
     it('should not return cell from filter over current cell, arrow up pressed', () => {
       const focusedElement = { rowKey: 'test_row_1', columnKey: 'test_column_2', part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'ArrowUp' }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'ArrowUp' },
+        focusedElement
+      )
       expect(element).toEqual(undefined)
     })
     it('should not return element under current cell, arrow down pressed', () => {
       const focusedElement = { rowKey: 'test_row_3', columnKey: 'test_column_2', part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'ArrowDown' }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'ArrowDown' },
+        focusedElement
+      )
       expect(element).toBe(undefined)
     })
     it('should not return element, focused cell is extreme right, arrow right pressed', () => {
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_4', part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'ArrowRight' }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'ArrowRight' },
+        focusedElement
+      )
       expect(element).toBe(undefined)
     })
     it('should not return element, focused cell is extreme left, arrow left pressed', () => {
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_1', part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, elements, { key: 'ArrowLeft' }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        elements,
+        { key: 'ArrowLeft' },
+        focusedElement
+      )
       expect(element).toBe(undefined)
     })
     it('should return last cell from header, tab shift key pressed, cell with input - text', () => {
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [header], 1, { tagName: 'INPUT', type: 'text' })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [header], 1, {
+        tagName: 'INPUT',
+        type: 'text',
+      })
       const focusedElement = { rowKey: 'test_row_1', columnKey: 'test_column_1', part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, generatedElements, { key: 'Tab', shiftKey: true }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Tab', shiftKey: true },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: header, columnKey: 'test_column_4', part: header })
     })
     it('should return next cell, tab key pressed, cell with input - text', () => {
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
-      const focusedElement = { rowKey: 'test_row_1', columnKey: 'test_column_1', index: 0, part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, generatedElements, { key: 'Tab' }, focusedElement)
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'text',
+      })
+      const focusedElement = {
+        rowKey: 'test_row_1',
+        columnKey: 'test_column_1',
+        index: 0,
+        part: body,
+      }
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Tab' },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: 'test_row_1', columnKey: 'test_column_2', part: body })
     })
     it('should return prev cell, tab + shift key pressed, cell with input - text', () => {
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'text',
+      })
       const focusedElement = { rowKey: 'test_row_1', columnKey: 'test_column_3', part: body }
-      const { element } = getFocusedCell(tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, generatedElements, { key: 'Tab', shiftKey: true }, focusedElement)
+      const { element } = getFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Tab', shiftKey: true },
+        focusedElement
+      )
       expect(element).toEqual({ rowKey: 'test_row_1', columnKey: 'test_column_2', part: body })
     })
     it('should not return focused element, shift + key pressed', () => {
       const generatedElements = generateElements(tableColumns, tableBodyRows, [])
-      const focusedElement = { rowKey: 'test_row_1', columnKey: 'test_column_1', index: 0, part: body }
+      const focusedElement = {
+        rowKey: 'test_row_1',
+        columnKey: 'test_column_1',
+        index: 0,
+        part: body,
+      }
       const { element } = getFocusedCell(
-        tableColumns, tableBodyRows, tableHeaderRows,
-        expandedRowIds, generatedElements, { key: 'Tab', shiftKey: true }, focusedElement,
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Tab', shiftKey: true },
+        focusedElement
       )
       expect(element).toEqual(undefined)
     })
   })
 
   // Batch 5: Ctrl+Arrow and part navigation scenarios (ported 1:1 from legacy)
-// NOTE: Assertions are intentionally permissive during RED phase; refine after implementation.
+  // NOTE: Assertions are intentionally permissive during RED phase; refine after implementation.
 
-// (Batch 5 corrected) CTRL/part navigation scenarios
-// NOTE: Using existing utility signatures from earlier in this file.
+  // (Batch 5 corrected) CTRL/part navigation scenarios – removed malformed experimental block
+  // Placeholder: original legacy CTRL navigation detailed cases already covered earlier in prior batches.
 
-describe('getNextFocusedCell - CTRL/part navigation', () => {
-  const header = generateElements('header', 1, 5, 0);
-  const body = generateElements('body', 3, 5, 0);
-  const footer = generateElements('footer', 1, 5, 0);
-  const table: any = { header, body, footer };
+  // Batch 6: Next 20 legacy cases (Navigation on parts + virtual table subset)
+  // Converted 1:1 from legacy file: packages/dx-grid-core/src/plugins/table-keyboard-navigation/helpers.test.ts
+  // Phase: RED – expectations preserved, implementation may be missing
 
-  const depsBase: any = {
-    tableColumns: [],
-    tableBodyRows: [],
-    tableHeaderRows: [],
-    tableFooterRows: [],
-    viewport: { left: 0, width: 800 },
-    scrollToColumn: () => {},
-  };
+  describe('Navigation on parts by arrows Up and Down + Ctrl (subset)', () => {
+    const header = 'heading'
+    const filter = 'filter'
+    const body = 'data'
+    const tableHeaderRows: any = [{ key: header }]
+    const expandedRowIds: any[] = []
+    const tableColumns: any = [
+      { key: 'test_column_1' },
+      { key: 'test_column_2' },
+      { key: 'test_column_3' },
+      { key: 'test_column_4' },
+    ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
+    const generatedElements = generateElements(tableColumns, tableBodyRows, [filter, header])
 
-  const call = (override: any) => getFocusedCell({ ...depsBase, ...override }, table.header, table.body, table.footer, undefined, undefined);
+    it('should return filter cell, arrow up', () => {
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 0,
+        part: body,
+      }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowUp', ctrlKey: true },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: filter, columnKey: 'test_column_1', part: filter })
+    })
 
-  it('should move to first cell in body when Ctrl+Home from body', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 2, columnIndex: 4 }, key: 'Home', ctrlKey: true });
-    expect(cell).toMatchObject({ part: 'body', rowIndex: 0, columnIndex: 0 });
-  });
+    it('should return body cell, arrow down', () => {
+      const focusedElement = { rowKey: filter, columnKey: 'test_column_2', part: filter }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowDown', ctrlKey: true },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: 'test_row_1', columnKey: 'test_column_1', part: body })
+    })
 
-  it('should move to last cell in body when Ctrl+End from body', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 0, columnIndex: 0 }, key: 'End', ctrlKey: true });
-    expect(cell).toMatchObject({ part: 'body', rowIndex: 2, columnIndex: 4 });
-  });
+    it('should focus element in the toolbar', () => {
+      const innerElements: any[] = []
+      for (let i = 0; i < 2; i += 1) {
+        innerElements.push({ hasAttribute: () => false, getAttribute: () => '1', focus: vi.fn() })
+      }
+      const refElement = { current: { querySelectorAll: () => innerElements } }
+      ;(generatedElements as any).toolbar = { none: [refElement] }
+      const focusedElement = { rowKey: header, columnKey: 'test_column_2', part: header }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowUp', ctrlKey: true },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+      expect(innerElements[0].focus).toHaveBeenCalled()
+    })
 
-  it('should move to first header cell when Ctrl+Home from header', () => {
-    const cell = call({ focusedElement: { part: 'header', rowIndex: 0, columnIndex: 3 }, key: 'Home', ctrlKey: true });
-    expect(cell).toMatchObject({ part: 'header', rowIndex: 0, columnIndex: 0 });
-  });
+    it('should focus element in the paging', () => {
+      const innerElements: any[] = []
+      for (let i = 0; i < 2; i += 1) {
+        innerElements.push({ hasAttribute: () => false, getAttribute: () => '1', focus: vi.fn() })
+      }
+      const refElement = { current: { querySelectorAll: () => innerElements } }
+      ;(generatedElements as any).paging = { none: [refElement] }
+      const focusedElement = { rowKey: 'test_row_3', columnKey: 'test_column_2', part: body }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowDown', ctrlKey: true },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+      expect(innerElements[0].focus).toHaveBeenCalled()
+    })
 
-  it('should move to last header cell when Ctrl+End from header', () => {
-    const cell = call({ focusedElement: { part: 'header', rowIndex: 0, columnIndex: 0 }, key: 'End', ctrlKey: true });
-    expect(cell).toMatchObject({ part: 'header', rowIndex: 0, columnIndex: 4 });
-  });
+    it('should return cell from header, focused element in toolbar', () => {
+      const innerElements: any[] = [
+        { hasAttribute: () => false, getAttribute: () => '1', focus: vi.fn() },
+      ]
+      const refElement = { current: { querySelectorAll: () => innerElements } }
+      ;(generatedElements as any).toolbar = { none: [refElement] }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowDown', ctrlKey: true, target: innerElements[0] },
+        {},
+        undefined
+      )
+      expect(element).toEqual({ rowKey: header, columnKey: 'test_column_1', part: header })
+    })
 
-  it('should move to first footer cell when Ctrl+Home from footer', () => {
-    const cell = call({ focusedElement: { part: 'footer', rowIndex: 0, columnIndex: 2 }, key: 'Home', ctrlKey: true });
-    expect(cell).toMatchObject({ part: 'footer', rowIndex: 0, columnIndex: 0 });
-  });
+    it('should return cell from body, focused element in paging', () => {
+      const innerElements: any[] = [
+        { hasAttribute: () => false, getAttribute: () => '1', focus: vi.fn() },
+      ]
+      const refElement = { current: { querySelectorAll: () => innerElements } }
+      ;(generatedElements as any).paging = { none: [refElement] }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowUp', ctrlKey: true, target: innerElements[0] },
+        {},
+        undefined
+      )
+      expect(element).toEqual({ rowKey: 'test_row_1', columnKey: 'test_column_1', part: body })
+    })
 
-  it('should move to last footer cell when Ctrl+End from footer', () => {
-    const cell = call({ focusedElement: { part: 'footer', rowIndex: 0, columnIndex: 0 }, key: 'End', ctrlKey: true });
-    expect(cell).toMatchObject({ part: 'footer', rowIndex: 0, columnIndex: 4 });
-  });
+    it('should not return cell, no focused elements, arrow down', () => {
+      const innerElements: any[] = [
+        { hasAttribute: () => false, getAttribute: () => '1', focus: vi.fn() },
+      ]
+      const refElement = { current: { querySelectorAll: () => innerElements } }
+      ;(generatedElements as any).toolbar = { none: [refElement] }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowDown', ctrlKey: true },
+        {},
+        undefined
+      )
+      expect(element).toEqual(undefined)
+    })
 
-  it('should keep focus when Ctrl key with non-handled key', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 1, columnIndex: 1 }, key: 'a', ctrlKey: true });
-    expect(cell).toMatchObject({ part: 'body', rowIndex: 1, columnIndex: 1 });
-  });
+    it('should not return cell, no toolbar, arrow down', () => {
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowDown', ctrlKey: true },
+        {},
+        undefined
+      )
+      expect(element).toEqual(undefined)
+    })
 
-  it('should move to previous column with Ctrl+ArrowLeft (body)', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 1, columnIndex: 3 }, key: 'ArrowLeft', ctrlKey: true });
-    expect(cell.columnIndex).toBe(2);
-  });
+    it('should not return cell, no focused elements, arrow up', () => {
+      const innerElements: any[] = [
+        { hasAttribute: () => false, getAttribute: () => '1', focus: vi.fn() },
+      ]
+      const refElement = { current: { querySelectorAll: () => innerElements } }
+      ;(generatedElements as any).paging = { none: [refElement] }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowUp', ctrlKey: true },
+        {},
+        undefined
+      )
+      expect(element).toEqual(undefined)
+    })
 
-  it('should move to next column with Ctrl+ArrowRight (body)', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 1, columnIndex: 1 }, key: 'ArrowRight', ctrlKey: true });
-    expect(cell.columnIndex).toBe(2);
-  });
+    it('should not return cell, no paging, arrow up', () => {
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowUp', ctrlKey: true },
+        {},
+        undefined
+      )
+      expect(element).toEqual(undefined)
+    })
+  })
 
-  it('should stay at first column with Ctrl+ArrowLeft at boundary (body)', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 1, columnIndex: 0 }, key: 'ArrowLeft', ctrlKey: true });
-    expect(cell.columnIndex).toBe(0);
-  });
+  describe('Navigation on virtual table (subset)', () => {
+    const header = 'heading'
+    const filter = 'filter'
+    const body = 'data'
+    const tableHeaderRows: any = [{ key: header }]
+    const expandedRowIds: any[] = []
+    const columns: any = [
+      { key: 'test_column_10' },
+      { key: 'test_column_11' },
+      { key: 'test_column_12' },
+      { key: 'test_column_13' },
+    ]
+    const tableColumns: any = [
+      { key: 'test_column_1' },
+      { key: 'test_column_2' },
+      { key: 'test_column_3' },
+      { key: 'test_column_4' },
+    ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
+    const generatedElements = generateElements(
+      columns,
+      tableBodyRows,
+      [filter, header],
+      1,
+      {},
+      true
+    )
 
-  it('should stay at last column with Ctrl+ArrowRight at boundary (body)', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 1, columnIndex: 4 }, key: 'ArrowRight', ctrlKey: true });
-    expect(cell.columnIndex).toBe(4);
-  });
+    it('should return first filter cell, arrow up + CTRL', () => {
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_12',
+        index: 0,
+        part: body,
+      }
+      const scrollToColumn = vi.fn()
+      const { element, scrolling } = getNextFocusedCell(
+        tableColumns.concat(columns),
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowUp', ctrlKey: true },
+        {},
+        focusedElement,
+        scrollToColumn
+      )
+      expect(element).toEqual({ rowKey: filter, columnKey: 'test_column_1', part: filter })
+      expect(scrolling).toBe('left')
+    })
 
-  it('should move up a row with Ctrl+ArrowUp (body)', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 2, columnIndex: 2 }, key: 'ArrowUp', ctrlKey: true });
-    expect(cell.rowIndex).toBe(1);
-  });
+    it('should return filter cell, arrow down + CTRL', () => {
+      const focusedElement = { rowKey: header, columnKey: 'test_column_12', index: 0, part: header }
+      const scrollToColumn = vi.fn()
+      const { element, scrolling } = getNextFocusedCell(
+        tableColumns.concat(columns),
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowDown', ctrlKey: true },
+        {},
+        focusedElement,
+        scrollToColumn
+      )
+      expect(element).toEqual({ rowKey: filter, columnKey: 'test_column_1', part: filter })
+      expect(scrolling).toBe('left')
+    })
 
-  it('should stay on first row with Ctrl+ArrowUp at top (body)', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 0, columnIndex: 2 }, key: 'ArrowUp', ctrlKey: true });
-    expect(cell.rowIndex).toBe(0);
-  });
+    it('should return cell from header, focused element in toolbar, arrow down', () => {
+      const innerElements: any[] = [
+        { hasAttribute: () => false, getAttribute: () => '1', focus: vi.fn() },
+      ]
+      const refElement = { current: { querySelectorAll: () => innerElements } }
+      ;(generatedElements as any).toolbar = { none: [refElement] }
+      const scrollToColumn = vi.fn()
+      const { element, scrolling } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowDown', ctrlKey: true, target: innerElements[0] },
+        {},
+        undefined,
+        scrollToColumn
+      )
+      expect(element).toEqual({ rowKey: header, columnKey: 'test_column_1', part: header })
+      expect(scrolling).toBe('left')
+    })
 
-  it('should move down a row with Ctrl+ArrowDown (body)', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 0, columnIndex: 2 }, key: 'ArrowDown', ctrlKey: true });
-    expect(cell.rowIndex).toBe(1);
-  });
+    it('should return cell from body, focused element in paging, arrow up', () => {
+      const innerElements: any[] = [
+        { hasAttribute: () => false, getAttribute: () => '1', focus: vi.fn() },
+      ]
+      const refElement = { current: { querySelectorAll: () => innerElements } }
+      ;(generatedElements as any).paging = { none: [refElement] }
+      const scrollToColumn = vi.fn()
+      const { element, scrolling } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'ArrowUp', ctrlKey: true, target: innerElements[0] },
+        {},
+        undefined,
+        scrollToColumn
+      )
+      expect(element).toEqual({ rowKey: 'test_row_1', columnKey: 'test_column_1', part: body })
+      expect(scrolling).toBe('left')
+    })
 
-  it('should stay on last row with Ctrl+ArrowDown at bottom (body)', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 2, columnIndex: 2 }, key: 'ArrowDown', ctrlKey: true });
-    expect(cell.rowIndex).toBe(2);
-  });
+    it('should return next row from body, Tab pressed', () => {
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_13',
+        index: 0,
+        part: body,
+      }
+      const scrollToColumn = vi.fn()
+      const { element, scrolling } = getNextFocusedCell(
+        tableColumns.concat(columns),
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Tab' },
+        {},
+        focusedElement,
+        scrollToColumn
+      )
+      expect(element).toEqual({ rowKey: 'test_row_3', columnKey: 'test_column_1', part: body })
+      expect(scrolling).toBe('left')
+    })
 
-  it('should move from header to body with ArrowDown at last header row', () => {
-    const cell = call({ focusedElement: { part: 'header', rowIndex: 0, columnIndex: 2 }, key: 'ArrowDown' });
-    expect(cell).toMatchObject({ part: 'body', rowIndex: 0, columnIndex: 2 });
-  });
+    it('should return filter cell after header, Tab pressed', () => {
+      const focusedElement = { rowKey: header, columnKey: 'test_column_13', index: 0, part: header }
+      const scrollToColumn = vi.fn()
+      const { element, scrolling } = getNextFocusedCell(
+        tableColumns.concat(columns),
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Tab' },
+        {},
+        focusedElement,
+        scrollToColumn
+      )
+      expect(element).toEqual({ rowKey: filter, columnKey: 'test_column_1', part: filter })
+      expect(scrolling).toBe('left')
+    })
 
-  it('should move from body to footer with ArrowDown at last body row', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 2, columnIndex: 2 }, key: 'ArrowDown' });
-    expect(cell).toMatchObject({ part: 'footer', rowIndex: 0, columnIndex: 2 });
-  });
+    it('should return body cell after filter, Tab pressed', () => {
+      const focusedElement = { rowKey: filter, columnKey: 'test_column_13', index: 0, part: filter }
+      const scrollToColumn = vi.fn()
+      const { element, scrolling } = getNextFocusedCell(
+        tableColumns.concat(columns),
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Tab' },
+        {},
+        focusedElement,
+        scrollToColumn
+      )
+      expect(element).toEqual({ rowKey: 'test_row_1', columnKey: 'test_column_1', part: body })
+      expect(scrolling).toBe('left')
+    })
 
-  it('should move from footer to body with ArrowUp', () => {
-    const cell = call({ focusedElement: { part: 'footer', rowIndex: 0, columnIndex: 1 }, key: 'ArrowUp' });
-    expect(cell).toMatchObject({ part: 'body', rowIndex: 2, columnIndex: 1 });
-  });
+    it('should return cell from header, focused element is last in the toolbar', () => {
+      const innerElements: any[] = [
+        { hasAttribute: () => false, getAttribute: () => '1' },
+        { hasAttribute: () => false, getAttribute: () => '1' },
+      ]
+      const refElement = { current: { querySelectorAll: () => innerElements } }
+      ;(generatedElements as any).toolbar = { none: [refElement] }
+      const scrollToColumn = vi.fn()
+      const { element, scrolling } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Tab', target: innerElements[1] },
+        {},
+        undefined,
+        scrollToColumn
+      )
+      expect(element).toEqual({ rowKey: header, columnKey: 'test_column_1', part: header })
+      expect(scrolling).toBe('left')
+    })
 
-  it('should move from body to header with ArrowUp at first body row', () => {
-    const cell = call({ focusedElement: { part: 'body', rowIndex: 0, columnIndex: 1 }, key: 'ArrowUp' });
-    expect(cell).toMatchObject({ part: 'header', rowIndex: 0, columnIndex: 1 });
-  });
+    it('should return first cell from body, focused element - first in the paging', () => {
+      const innerElements: any[] = [
+        { hasAttribute: () => false, getAttribute: () => '1' },
+        { hasAttribute: () => false, getAttribute: () => '1' },
+      ]
+      const refElement = { current: { querySelectorAll: () => innerElements } }
+      ;(generatedElements as any).paging = { none: [refElement] }
+      const scrollToColumn = vi.fn()
+      const { element, scrolling } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Tab', shiftKey: true, target: innerElements[0] },
+        {},
+        undefined,
+        scrollToColumn
+      )
+      expect(element).toEqual({ rowKey: 'test_row_1', columnKey: 'test_column_1', part: body })
+      expect(scrolling).toBe('left')
+    })
 
-  it('should stay in header when ArrowUp at first header row', () => {
-    const cell = call({ focusedElement: { part: 'header', rowIndex: 0, columnIndex: 1 }, key: 'ArrowUp' });
-    expect(cell.part).toBe('header');
-    expect(cell.rowIndex).toBe(0);
-  });
+    it('should return prev row from body (virtual, shift+Tab)', () => {
+      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_1', part: body }
+      const scrollToColumn = vi.fn()
+      const { element, scrolling } = getNextFocusedCell(
+        tableColumns.concat(columns),
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generateElements(tableColumns, tableBodyRows, [filter, header], 1, {}, true),
+        { key: 'Tab', shiftKey: true },
+        {},
+        focusedElement,
+        scrollToColumn
+      )
+      expect(element).toEqual({ rowKey: 'test_row_1', columnKey: 'test_column_13', part: body })
+      expect(scrolling).toBe('right')
+    })
+  })
 
-  it('should stay in footer when ArrowDown at last footer row', () => {
-    const cell = call({ focusedElement: { part: 'footer', rowIndex: 0, columnIndex: 1 }, key: 'ArrowDown' });
-    expect(cell.part).toBe('footer');
-    expect(cell.rowIndex).toBe(0);
-  });
-});
+  // Batch 7: Next 20 legacy tests (complete remaining virtual shift+Tab block + start of group rows block)
+  describe('Navigation on virtual table, Tab + shift pressed (continuation)', () => {
+    const header = 'heading'
+    const filter = 'filter'
+    const body = 'data'
+    const tableHeaderRows: any = [{ key: header }]
+    const expandedRowIds: any[] = []
+    const tableColumns: any = [
+      { key: 'test_column_1' },
+      { key: 'test_column_2' },
+      { key: 'test_column_3' },
+      { key: 'test_column_4' },
+    ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
+    const columns: any = [
+      { key: 'test_column_10' },
+      { key: 'test_column_11' },
+      { key: 'test_column_12' },
+      { key: 'test_column_13' },
+    ]
+    const generatedElements = generateElements(
+      tableColumns,
+      tableBodyRows,
+      [filter, header],
+      1,
+      {},
+      true
+    )
+
+    it('should return filter last cell', () => {
+      const focusedElement = { rowKey: 'test_row_1', columnKey: 'test_column_1', part: body }
+      const scrollToColumn = vi.fn()
+      const { element, scrolling } = getNextFocusedCell(
+        tableColumns.concat(columns),
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Tab', shiftKey: true },
+        {},
+        focusedElement,
+        scrollToColumn
+      )
+      expect(element).toEqual({ rowKey: filter, columnKey: 'test_column_13', part: filter })
+      expect(scrolling).toBe('right')
+    })
+
+    it('should return header last cell', () => {
+      const focusedElement = { rowKey: filter, columnKey: 'test_column_1', part: filter }
+      const scrollToColumn = vi.fn()
+      const { element, scrolling } = getNextFocusedCell(
+        tableColumns.concat(columns),
+        tableBodyRows,
+        tableHeaderRows,
+        expandedRowIds,
+        generatedElements,
+        { key: 'Tab', shiftKey: true },
+        {},
+        focusedElement,
+        scrollToColumn
+      )
+      expect(element).toEqual({ rowKey: header, columnKey: 'test_column_13', part: header })
+      expect(scrolling).toBe('right')
+    })
+  })
+
+  describe('Navigation on group rows (subset batch 7)', () => {
+    const GROUP_TYPE = 'group'
+    const body = 'data'
+    const tableColumns: any = [
+      { key: 'test_column_1' },
+      { key: 'test_column_2' },
+      { key: 'test_column_3' },
+      { key: 'test_column_4' },
+    ]
+    const tableBodyRows: any = [
+      { key: `${GROUP_TYPE}_1` },
+      { key: `${GROUP_TYPE}_2` },
+      { key: 'test_row_3' },
+      { key: `${GROUP_TYPE}_4` },
+    ]
+    const columns: any = [{ key: 'test_column_1' }, { key: 'test_column_3' }]
+    const generatedElements = generateElements(columns, tableBodyRows, [], 0)
+    const refElement = { current: { querySelectorAll: () => [] } }
+    ;(generatedElements as any).test_row_3.test_column_2 = [refElement]
+    ;(generatedElements as any).test_row_3.test_column_4 = [refElement]
+
+    it('should return next cell, Tab pressed', () => {
+      const focusedElement = { rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_1', part: body }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'Tab' },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_3', part: body })
+    })
+
+    it('should return previous cell, Tab + shift pressed', () => {
+      const focusedElement = { rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_3', part: body }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'Tab', shiftKey: true },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_1', part: body })
+    })
+
+    it('should return cell in the next row, Tab pressed', () => {
+      const focusedElement = { rowKey: `${GROUP_TYPE}_1`, columnKey: 'test_column_3', part: body }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'Tab' },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_1', part: body })
+    })
+
+    it('should return cell in the previous row, Tab + shift pressed', () => {
+      const focusedElement = { rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_1', part: body }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'Tab', shiftKey: true },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: `${GROUP_TYPE}_1`, columnKey: 'test_column_3', part: body })
+    })
+
+    it('should return left cell, arrow left pressed', () => {
+      const focusedElement = { rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_3', part: body }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'ArrowLeft' },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_1', part: body })
+    })
+
+    it('should not return left cell, no cell from right, arrow left pressed', () => {
+      const focusedElement = { rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_1', part: body }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'ArrowLeft' },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+    })
+
+    it('should return right cell, arrow right pressed', () => {
+      const focusedElement = { rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_1', part: body }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'ArrowRight' },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_3', part: body })
+    })
+
+    it('should not return right cell, no cell from right, arrow right pressed', () => {
+      const focusedElement = { rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_3', part: body }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'ArrowRight' },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual(undefined)
+    })
+
+    it('should return top cell, arrow up pressed', () => {
+      const focusedElement = { rowKey: 'test_row_3', columnKey: 'test_column_2', part: body }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'ArrowUp' },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: `${GROUP_TYPE}_2`, columnKey: 'test_column_1', part: body })
+    })
+
+    it('should return bottom cell, arrow down pressed', () => {
+      const focusedElement = { rowKey: 'test_row_3', columnKey: 'test_column_2', part: body }
+      const { element } = getNextFocusedCell(
+        tableColumns,
+        tableBodyRows,
+        [],
+        [],
+        generatedElements,
+        { key: 'ArrowDown' },
+        {},
+        focusedElement
+      )
+      expect(element).toEqual({ rowKey: `${GROUP_TYPE}_4`, columnKey: 'test_column_1', part: body })
+    })
+  })
+})
