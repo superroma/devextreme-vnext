@@ -1744,10 +1744,7 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       { key: 'test_row_3' },
       { key: `${GROUP_TYPE}_4` },
     ]
-    const columns: any = [
-      { key: 'test_column_1' },
-      { key: 'test_column_3' },
-    ]
+    const columns: any = [{ key: 'test_column_1' }, { key: 'test_column_3' }]
     const generatedElements: any = generateElements(columns, tableBodyRows, [], 0)
     const refElement = { current: { querySelectorAll: () => [] } }
     generatedElements.test_row_3.test_column_2 = [refElement]
@@ -1759,17 +1756,12 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
         { hasAttribute: () => false, getAttribute: () => '1' },
       ]
       generatedElements.paging = [] as any
-      generatedElements.paging.none = [
-        { current: { querySelectorAll: () => innerElements } },
-      ]
-      const { element } = getFocusedCell(
-        tableColumns,
-        tableBodyRows,
-        [],
-        [],
-        generatedElements,
-        { key: 'Tab', shiftKey: true, target: innerElements[0] }
-      )
+      generatedElements.paging.none = [{ current: { querySelectorAll: () => innerElements } }]
+      const { element } = getFocusedCell(tableColumns, tableBodyRows, [], [], generatedElements, {
+        key: 'Tab',
+        shiftKey: true,
+        target: innerElements[0],
+      })
       expect(element).toEqual({
         rowKey: `${GROUP_TYPE}_4`,
         columnKey: 'test_column_3',
@@ -1811,14 +1803,13 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       { key: 'test_column_3' },
       { key: 'test_column_4' },
     ]
-    const tableBodyRows: any = [
-      { key: 'test_row_1' },
-      { key: 'test_row_2' },
-      { key: 'test_row_3' },
-    ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
 
     it('should return focused element from cell on action on cell, input type text', () => {
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'text',
+      })
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
       const { element } = getFocusedCell(
         tableColumns,
@@ -1829,11 +1820,19 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
         { key: 'Enter' },
         focusedElement
       )
-      expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body })
+      expect(element).toEqual({
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 0,
+        part: body,
+      })
     })
 
     it('should not return focused element from cell on action on cell, input type checkbox', () => {
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'checkbox' })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'checkbox',
+      })
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
       const { element } = getFocusedCell(
         tableColumns,
@@ -1848,8 +1847,16 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     })
 
     it('should return cell on enter action on its input', () => {
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body }
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'text',
+      })
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 0,
+        part: body,
+      }
       const { element } = getFocusedCell(
         tableColumns,
         tableBodyRows,
@@ -1864,7 +1871,11 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
 
     it('should return span from cell on action on cell', () => {
       const click = vi.fn()
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'SPAN', type: '', action: click })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'SPAN',
+        type: '',
+        action: click,
+      })
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
       const { element } = getFocusedCell(
         tableColumns,
@@ -1875,14 +1886,28 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
         { key: 'Enter' },
         focusedElement
       )
-      expect(element).toEqual({ rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body })
+      expect(element).toEqual({
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 0,
+        part: body,
+      })
       expect(click).toBeCalled()
     })
 
     it('should not return focused element on action on span', () => {
       const click = vi.fn()
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'SPAN', type: '', action: click })
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body }
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'SPAN',
+        type: '',
+        action: click,
+      })
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 0,
+        part: body,
+      }
       const { element } = getFocusedCell(
         tableColumns,
         tableBodyRows,
@@ -1898,7 +1923,12 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
 
     it('should not return focused element on action on cell with other elements', () => {
       const generatedElements = generateElements(tableColumns, tableBodyRows, [])
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 1, part: body }
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 1,
+        part: body,
+      }
       const { element } = getFocusedCell(
         tableColumns,
         tableBodyRows,
@@ -1927,7 +1957,10 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     })
 
     it('should not return focused element, current focused element is undefined', () => {
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'text',
+      })
       const { element } = getFocusedCell(
         tableColumns,
         tableBodyRows,
@@ -1950,15 +1983,19 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       { key: 'test_column_3' },
       { key: 'test_column_4' },
     ]
-    const tableBodyRows: any = [
-      { key: 'test_row_1' },
-      { key: 'test_row_2' },
-      { key: 'test_row_3' },
-    ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
 
     it('should return cell on escape action on input', () => {
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body }
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'text',
+      })
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 0,
+        part: body,
+      }
       const { element } = getFocusedCell(
         tableColumns,
         tableBodyRows,
@@ -1972,7 +2009,10 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     })
 
     it('should not return focused element on escape action on cell', () => {
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'text',
+      })
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: 'body' }
       const { element } = getFocusedCell(
         tableColumns,
@@ -1987,8 +2027,15 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     })
 
     it('should not return focused element on escape action on span', () => {
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'SPAN' })
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: body }
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'SPAN',
+      })
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 0,
+        part: body,
+      }
       const { element } = getFocusedCell(
         tableColumns,
         tableBodyRows,
@@ -2003,7 +2050,12 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
 
     it('should not return focused element on escape action on cell with other elements', () => {
       const generatedElements = generateElements(tableColumns, tableBodyRows, [])
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 0, part: 'body' }
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 0,
+        part: 'body',
+      }
       const { element } = getFocusedCell(
         tableColumns,
         tableBodyRows,
@@ -2032,7 +2084,10 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
     })
 
     it('should not return focused element, focusedElement is undefined', () => {
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'text' })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'text',
+      })
       const { element } = getFocusedCell(
         tableColumns,
         tableBodyRows,
@@ -2055,15 +2110,15 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       { key: 'test_column_3' },
       { key: 'test_column_4' },
     ]
-    const tableBodyRows: any = [
-      { key: 'test_row_1' },
-      { key: 'test_row_2' },
-      { key: 'test_row_3' },
-    ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
 
     it('should call ection', () => {
       const click = vi.fn()
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'checkbox', action: click })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'checkbox',
+        action: click,
+      })
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
       const { element } = getFocusedCell(
         tableColumns,
@@ -2080,7 +2135,11 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
 
     it('should not call ection, no focused element', () => {
       const click = vi.fn()
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'checkbox', action: click })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'checkbox',
+        action: click,
+      })
       const { element } = getFocusedCell(
         tableColumns,
         tableBodyRows,
@@ -2095,8 +2154,17 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
 
     it('should not call action, focused inner element', () => {
       const click = vi.fn()
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'checkbox', action: click })
-      const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', index: 1, part: body }
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'checkbox',
+        action: click,
+      })
+      const focusedElement = {
+        rowKey: 'test_row_2',
+        columnKey: 'test_column_2',
+        index: 1,
+        part: body,
+      }
       const { element } = getFocusedCell(
         tableColumns,
         tableBodyRows,
@@ -2112,7 +2180,11 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
 
     it('should not call action, input type is button', () => {
       const click = vi.fn()
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { tagName: 'INPUT', type: 'button', action: click })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        tagName: 'INPUT',
+        type: 'button',
+        action: click,
+      })
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
       const { element } = getFocusedCell(
         tableColumns,
@@ -2135,16 +2207,14 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
       { key: 'test_column_3' },
       { key: 'test_column_4' },
     ]
-    const tableBodyRows: any = [
-      { key: 'test_row_1' },
-      { key: 'test_row_2' },
-      { key: 'test_row_3' },
-    ]
+    const tableBodyRows: any = [{ key: 'test_row_1' }, { key: 'test_row_2' }, { key: 'test_row_3' }]
     const body = 'data'
 
     it('should expand row', () => {
       const click = vi.fn()
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { action: click })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        action: click,
+      })
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
       const { element } = getFocusedCell(
         tableColumns,
@@ -2161,7 +2231,9 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
 
     it('should not expand row, row expanded already', () => {
       const click = vi.fn()
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { action: click })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        action: click,
+      })
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
       const { element } = getFocusedCell(
         tableColumns,
@@ -2178,7 +2250,9 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
 
     it('should collapse row', () => {
       const click = vi.fn()
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { action: click })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        action: click,
+      })
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
       const { element } = getFocusedCell(
         tableColumns,
@@ -2195,7 +2269,9 @@ describe('useTableKeyboardNavigation.helpers - converted legacy behavior', () =>
 
     it('should not collapse row, raw collapsed already', () => {
       const click = vi.fn()
-      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, { action: click })
+      const generatedElements = generateElements(tableColumns, tableBodyRows, [], 1, {
+        action: click,
+      })
       const focusedElement = { rowKey: 'test_row_2', columnKey: 'test_column_2', part: body }
       const { element } = getFocusedCell(
         tableColumns,
