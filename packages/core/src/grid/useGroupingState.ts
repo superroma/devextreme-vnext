@@ -1,6 +1,8 @@
 import { useCallback, useState } from 'react'
 
-export interface GroupingItem { columnName: string }
+export interface GroupingItem {
+  columnName: string
+}
 
 export function changeColumnGrouping(
   state: { grouping: GroupingItem[]; expandedGroups?: string[] },
@@ -31,9 +33,7 @@ export function changeColumnGrouping(
   if (ungroupedIndex === -1) {
     return { grouping: nextGrouping }
   }
-  const filteredExpanded = expandedGroups.filter(
-    (key) => key.split('|').length <= ungroupedIndex
-  )
+  const filteredExpanded = expandedGroups.filter((key) => key.split('|').length <= ungroupedIndex)
   if (filteredExpanded.length === expandedGroups.length) {
     return { grouping: nextGrouping }
   }
@@ -59,10 +59,7 @@ export function draftColumnGrouping(
 ) {
   const base = state.draftGrouping || state.grouping
   return {
-    draftGrouping: changeColumnGrouping(
-      { grouping: base, expandedGroups: [] },
-      payload
-    ).grouping,
+    draftGrouping: changeColumnGrouping({ grouping: base, expandedGroups: [] }, payload).grouping,
   }
 }
 

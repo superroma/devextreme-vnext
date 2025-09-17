@@ -23,9 +23,7 @@ export function useRowDetailState(options: UseRowDetailStateOptions = {}) {
     onExpandedDetailRowIdsChange,
     defaultExpandedDetailRowIds = [],
   } = options
-  const [uncontrolled, setUncontrolled] = useState<(string | number)[]>(
-    defaultExpandedDetailRowIds
-  )
+  const [uncontrolled, setUncontrolled] = useState<(string | number)[]>(defaultExpandedDetailRowIds)
   const isControlled = controlled !== undefined
   const effective = isControlled ? controlled! : uncontrolled
   const setExpandedDetailRowIds = useCallback(
