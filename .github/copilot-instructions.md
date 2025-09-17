@@ -71,11 +71,18 @@ grep -c "it(" packages/core/src/grid/__tests__/useHOOK.test.ts
 - **Keep exact build script**: `tsup + tsc --emitDeclarationOnly` pattern
 - Add to root `tsconfig.json`: paths and references sections
 
-## Development Methodology: TDD
+## Development Methodology: TDD + Legacy Verification
 
 1. **RED**: Convert legacy tests EXACTLY (1:1 mapping)
 2. **GREEN**: Implement to pass converted tests
-3. **REFACTOR**: Optimize. Fix with `pnpm typecheck`, `pnpm build`
+3. **VERIFY**: Cross-check against legacy implementation for missing edge cases
+4. **REFACTOR**: Optimize. Fix with `pnpm typecheck`, `pnpm build`
+
+### Implementation Approach (Step 09+)
+
+**Primary**: Implement hooks to make the converted tests pass  
+**Verification**: Cross-check against legacy implementation for missing edge cases  
+**Pattern**: Follow established patterns from working hooks (useSorting, useFiltering, usePaging)
 
 ## Architecture
 
